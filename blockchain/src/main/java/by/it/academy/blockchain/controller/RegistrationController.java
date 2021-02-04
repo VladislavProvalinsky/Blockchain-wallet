@@ -1,7 +1,7 @@
 package by.it.academy.blockchain.controller;
 
 import by.it.academy.blockchain.entity.User;
-import by.it.academy.blockchain.repository.UserRepository;
+import by.it.academy.blockchain.service.RegistrationService;
 import by.it.academy.blockchain.service.UserService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class RegistrationController {
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    UserService userService;
+    RegistrationService registrationService;
 
     @GetMapping
     public ModelAndView getRegistrationPage (ModelAndView modelAndView) {
@@ -41,20 +38,6 @@ public class RegistrationController {
                                 @ModelAttribute("passwordConfirm") String confirmed,
                                 ModelAndView modelAndView) {
         log.info("-----------------------------");
-        if (!user.getPassword().equals(confirmed)) {
-            modelAndView.setViewName("registration");
-            modelAndView.addObject(user);
-            modelAndView.addObject("passwordError", "Passwords are different!");
-            return modelAndView;
-        }
-        if (userRepository.findByUsername(user.getUsername()) != null) {
-            modelAndView.setViewName("registration");
-            modelAndView.addObject(user);
-            modelAndView.addObject("emailError", "User with this email is registered! Choose another email");
-            return modelAndView;
-        }
-        userService.saveRegisteredUser(user);
-        modelAndView.setViewName("home");
-        return modelAndView;
+        return registrationService.checkForErrorsAndSaveIfOk(user, confirmed, modelAndView);
     }
 }
