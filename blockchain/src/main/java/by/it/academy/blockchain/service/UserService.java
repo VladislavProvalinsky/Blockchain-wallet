@@ -1,9 +1,11 @@
 package by.it.academy.blockchain.service;
 
+import by.it.academy.blockchain.domain.UserView;
 import by.it.academy.blockchain.entity.Role;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.repository.RoleRepository;
 import by.it.academy.blockchain.repository.UserRepository;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,6 +31,9 @@ public class UserService implements UserDetailsService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    WalletService walletService;
+
 
     public User findByUsername (String username){
        return userRepository.findByUsername(username);
@@ -38,10 +43,12 @@ public class UserService implements UserDetailsService{
         if (roleRepository.findById(1L).isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.getRoles().add(new Role(1L, "ROLE_USER"));
+            user.getWallets().add(walletService.registerNewWalletUtil(user));
             userRepository.save(user);
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.getRoles().add(roleRepository.findById(1L).get());
+            user.getWallets().add(walletService.registerNewWalletUtil(user));
             userRepository.save(user);
         }
     }
@@ -61,7 +68,8 @@ public class UserService implements UserDetailsService{
                 .collect(Collectors.toList());
     }
 
-    public User getUserWallet(String username) {
-        return userRepository.findByUsername(username);
+    @JsonView(UserView.RequiredFieldView.class)
+    public User getOne(Long id) {
+        return userRepository.findById(id).orElseThrow();
     }
 }

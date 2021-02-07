@@ -6,7 +6,7 @@
 
 <div class="w3-content" style="max-width:1400px">
 <!-- Header -->
-<header class="w3-container w3-center w3-padding-32">
+<header class="w3-container w3-center w3-padding-16">
   <h1><b>BLOCKCHAIN WALLET</b></h1>
   <p>Welcome in the most security wallet using <span class="w3-tag">Blockchain technology!</span></p>
 </header>

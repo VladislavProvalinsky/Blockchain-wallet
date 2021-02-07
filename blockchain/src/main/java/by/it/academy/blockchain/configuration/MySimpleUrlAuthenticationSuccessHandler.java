@@ -2,7 +2,6 @@ package by.it.academy.blockchain.configuration;
 
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.repository.UserRepository;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.logging.Log;

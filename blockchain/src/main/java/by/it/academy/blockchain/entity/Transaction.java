@@ -1,7 +1,8 @@
 package by.it.academy.blockchain.entity;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,7 +10,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "transactions")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Transaction implements Serializable {
     private static final long serialVersionUID = 5040651852162921242L;

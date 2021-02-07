@@ -1,9 +1,7 @@
 package by.it.academy.blockchain.entity;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,14 +11,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "wallets")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Wallet implements Serializable {
     private static final long serialVersionUID = -3365706083289255873L;
 
     @Id
-    @GeneratedValue(generator = "system-uuid") // генератор UUID
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+//    @GeneratedValue(generator = "system-uuid") // генератор UUID
+//    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String id; // публичный ключ и ID кошелька
 
     @Column (name = "input", scale = 2)
@@ -33,4 +32,9 @@ public class Wallet implements Serializable {
     @OneToMany (cascade = CascadeType.ALL)
     @JoinColumn (name = "wallet_id")
     private List<Transaction> transactions = new ArrayList<>(); // список транзакций в кошельке
+
+    public Wallet(String id, Double input) {
+        this.id = id;
+        this.input = input;
+    }
 }
