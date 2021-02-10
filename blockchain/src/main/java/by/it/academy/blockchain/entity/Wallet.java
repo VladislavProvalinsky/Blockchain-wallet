@@ -29,7 +29,7 @@ public class Wallet implements Serializable {
     private Double output;
 
     @ToString.Exclude
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn (name = "wallet_id")
     private List<Transaction> transactions = new ArrayList<>(); // список транзакций в кошельке
 

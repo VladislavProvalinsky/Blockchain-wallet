@@ -31,25 +31,28 @@
 <div class="row">
   <div class="col-50">
     <div class="container">
-      <form action="/action_page.php">
+      <form action="/blockchain/users/${user.id}/new_transaction" modelAttribute="transaction" method="post">
         <div class="row">
           <div class="col-50">
             <br>
             <label for="sender"><i class="fa fa-address-book"></i> Sender Wallet ID</label>
             <input type="text" value=${wallet.id} id="sender" name="senderPublicKey" required>
+            ${senderPublicKeyError}
 
             <label for="receiver"><i class="fa fa-address-book-o"></i> Receiver Wallet ID</label>
             <input type="text" id="receiver" name="receiverPublicKey" placeholder="${wallet.id}" required>
+            ${receiverPublicKeyError}
 
             <label for="value"><i class="fa fa-bitcoin"></i> Value</label>
             <input type="text" id="value" name="value" placeholder="${wallet.input}" pattern="\d*" required>
+            ${valueError}
 
             <label for="myCheck"><i class="fa fa-thumbs-o-up"></i>
             Comission for miner: <input type="checkbox" id="myCheck" onclick="myFunction()"><small class="form-text text-muted">It will help to confirm your transaction faster</small></label>
             <input type="hidden" id="comission" name="comission" placeholder="${wallet.input}" pattern="\d*">
 
             <label for="senderPK"><i class="fa fa-key"></i> Signature</label>
-            <input type="password" id="senderPK" name="sender" placeholder="Insert your private wallet key to sign transaction" required>
+            <input type="password" id="senderPK" name="privateKey" placeholder="Insert your private wallet key to sign transaction" required>
           </div>
         </div>
         <label>

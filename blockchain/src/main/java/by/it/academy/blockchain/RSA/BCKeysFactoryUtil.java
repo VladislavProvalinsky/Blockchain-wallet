@@ -3,10 +3,7 @@ package by.it.academy.blockchain.RSA;
 import by.it.academy.blockchain.entity.Transaction;
 import org.bitcoinj.core.Base58;
 import org.bouncycastle.crypto.digests.SHA512Digest;
-import org.bouncycastle.jcajce.provider.digest.SHA512;
-import org.bouncycastle.jcajce.provider.symmetric.PBEPBKDF2;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.BadPaddingException;
@@ -112,13 +109,13 @@ public class BCKeysFactoryUtil {
     // -----------------
 
     public boolean verifyTransaction (String publicKey, String transactionHash){
-
+        return true;
     }
 
     // хешируем транзакцию с помощью хеш функции
     public String hashTransaction (Transaction transaction){
         SHA512Digest digest = new SHA512Digest();
-
+        return "";
     }
 
 
