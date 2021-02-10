@@ -1,7 +1,10 @@
     <!-- Footer -->
-    <footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-      <p class="text-center">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a><br>
-      2021 Copyright: <a href="https://mdbootstrap.com/" target="_blank">MDBootstrap.com</a></p>
+    <footer class="w3-container w3-gray w3-padding-32 w3-margin-top">
+      <p class="text-center">Powered by <a href="https://www.w3schools.com/w3css/default.asp" style="color: green" target="_blank">w3.css</a><br>
+      2021 Copyright: <a href="https://mdbootstrap.com/" style="color: green" target="_blank">MDBootstrap.com</a><br>
+      <i class="fa fa-copyright"></i> Vladislav Provalinsky
+      <a href="https://www.linkedin.com/in/vprovalinsky/" style="color: green" target="_blank"><i class="fa fa-linkedin"></i></a>
+      <a href="https://github.com/VladislavProvalinsky" style="color: green" target="_blank"><i class="fa fa-git"></i></a></p>
     </footer>
 
     <!-- Optional JavaScript -->

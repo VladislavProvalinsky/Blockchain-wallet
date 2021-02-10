@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 public enum TransactionStatus {
 
     CONFIRMED ("CONFIRMED") ,
-    NOT_CONFIRMED ("NOT CONFIRMED");
+    NOT_CONFIRMED ("NOT CONFIRMED"),
+    VERIFIED ("VERIFIED");
 
     private String name;
 }

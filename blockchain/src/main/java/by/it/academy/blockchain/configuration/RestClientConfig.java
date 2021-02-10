@@ -1,13 +1,17 @@
 package by.it.academy.blockchain.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,19 +19,35 @@ import java.util.List;
 public class RestClientConfig {
 
     @Autowired
-    List<HttpMessageConverter<?>> messageConverters;
+    Jackson2ObjectMapperBuilder builder;
 
     @Bean
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
+    public List<HttpMessageConverter<?>> converters() {
+        List<HttpMessageConverter<?>> converters = new ArrayList<>();
+        converters.add(converter());
+        return converters;
     }
 
     @Bean
-    public MappingJackson2HttpMessageConverter converter (){
+    public RestTemplate restTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setMessageConverters(converters());
+        return restTemplate;
+    }
+
+    @Bean
+    @Primary
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
+        return objectMapper;
+    }
+
+    @Bean
+    public MappingJackson2HttpMessageConverter converter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-        messageConverters.add(converter);
-        restTemplate().setMessageConverters(messageConverters);
+        converter.setObjectMapper(objectMapper());
         return converter;
     }
+
 }

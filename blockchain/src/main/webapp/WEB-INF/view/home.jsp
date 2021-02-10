@@ -56,7 +56,7 @@
       </div>
       <br>
     <div class="w3-container">
-      <h3><b>WHAT IS BLOCKCHAIN WALLET</b></h3>
+      <h3><i class="fa fa-university"></i><b> WHAT IS BLOCKCHAIN WALLET</b></h3>
       <h5>Updated, <span class="w3-opacity">February 4, 2021</span></h5>
     </div>
 
@@ -82,7 +82,7 @@
   <img src="https://www.etoro.com/wp-content/uploads/2018/11/ETHBTC.jpg" alt="Coins" style="width:100%">
     <div class="w3-container">
       <br>
-      <h3><b>ABOUT WALLET CURRENCY</b></h3>
+      <h3><i class="fa fa-btc"></i><b> ABOUT WALLET CURRENCY</b></h3>
       <h5>Updated, <span class="w3-opacity">February 4, 2021</span></h5>
     </div>
 
@@ -108,7 +108,7 @@
   <img src="https://www.marydaytrader.com/wp-content/uploads/2018/09/swingtrading3.jpg" alt="Rates" width="100%" height="200">
     <div class="w3-container">
       <br>
-      <h3><b>CRYPTOCURRENCY EXCHANGE RATES: live</b></h3>
+      <h3><i class="fa fa-line-chart"></i><b> CRYPTOCURRENCY EXCHANGE RATES </b></h3>
     </div>
 
     <div id="coinmarketcap-widget-coin-price-block" coins="1,1027,825,52,6636,2010,1975" currency="USD" theme="light"
@@ -142,7 +142,7 @@
     <img src="https://cdn.designrush.com/uploads/users/customer-11/image_1525792187_NwXoYVyTTPgUtu7ckjN2tc9JDE6ffFc9GMJEOYDq.jpeg" style="width:100%">
       <div class="w3-container w3-white">
         <br>
-        <h4><b>ABOUT PROJECT</b></h4>
+        <h4><i class="fa fa-briefcase"></i> <b> ABOUT PROJECT</b></h4>
         <p class="text-sm-left">Blockchain: electronic wallet and mining service (Study project in IT-Academy (Belarus Hi Tech Park).
         Electronic wallet - Spring MVC web interface for managing transactions and initiating a mining session.
         Mining service - Spring Boot application generating blocks for mining sessions on a multithreading basis and
@@ -157,7 +157,7 @@
   <!-- Posts -->
   <div class="w3-card w3-margin">
     <div class="w3-container w3-padding">
-      <h4>Popular Posts</h4>
+      <h4><i class="fa fa-globe"></i> Popular Posts</h4>
     </div>
     <ul class="w3-ul w3-hoverable w3-white">
       <li class="w3-padding-16">
@@ -195,7 +195,7 @@
   <!-- Labels / tags -->
   <div class="w3-card w3-margin">
     <div class="w3-container w3-padding">
-      <h4>Tags</h4>
+      <h4><i class="fa fa-hashtag"></i> Tags</h4>
     </div>
     <div class="w3-container w3-white">
     <br>

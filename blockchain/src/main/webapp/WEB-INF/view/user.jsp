@@ -4,7 +4,6 @@
 
 <body class="w3-light-grey">
 
-
 <div class="w3-content" style="max-width:1400px">
 <!-- Header -->
 <header class="w3-container w3-center w3-padding-16">
@@ -20,14 +19,18 @@
     </div>
     <br>
     <div style="color: white; text-align: center;">
-    ${user.name} ${user.surname}</p>
+    <h4>${user.name} ${user.surname}</h4>
     </div>
+    <hr color="grey">
     <a href="#">Wallets</a>
     <a href="#">Transactions</a>
     <a href="#">Block Tree</a>
     <a href="#">Contact</a>
+    <a href="http://localhost:8080/blockchain/logout">Logout</a>
   </div>
-  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; MENU</span>
+  <div id="main">
+  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; HOME</span>
+  </div>
 
 <div class="w3-row">
   <div class="w3-col s4">
@@ -36,7 +39,7 @@
           <div class="w3-container w3-white">
             <h4><b>YOUR WALLET</b></h4>
             <hr>
-            <h4><u><b>BALANCE:</b></u><cite> ${wallet.input} BTC</cite></h4></p>
+            <h4><u><b>BALANCE:</b></u><cite> ${wallet.input} </cite><i class="fa fa-bitcoin"></i></h4></p>
             <p class="text-sm-left">Your personal wallet! Make transactions, mine bitcoins, enjoy the life!</p>
                 <div class="w3-col m8 s12">
                     <p><button type="button" onclick="window.location.href='https://github.com/VladislavProvalinsky/Blockchain-wallet';"
@@ -56,10 +59,7 @@
           <div class="w3-container w3-white">
             <br>
             <h4><b>TRANSACTION</b></h4>
-            <p class="text-sm-left">Blockchain: electronic wallet and mining service (Study project in IT-Academy (Belarus Hi Tech Park).
-            Electronic wallet - Spring MVC web interface for managing transactions and initiating a mining session.
-            Mining service - Spring Boot application generating blocks for mining sessions on a multithreading basis and
-            verifying the consistency of the chain.</p>
+            <p class="text-sm-left">Generate new transactions, send money and support blockchain!</p>
                 <div class="w3-col m8 s12">
                     <!-- Button to open the modal -->
                     <p><button type="button" onclick="window.location='http://localhost:8080/blockchain/users/${user.id}/transactionForm';"
@@ -72,14 +72,11 @@
 
   <div class="w3-col s4">
     <div class="w3-card w3-margin w3-margin-top">
-        <img src="https://cdn.designrush.com/uploads/users/customer-11/image_1525792187_NwXoYVyTTPgUtu7ckjN2tc9JDE6ffFc9GMJEOYDq.jpeg" style="width:100%">
+        <img src="https://fi.co/system/posts/learn-blockchain.png" style="width:100%">
           <div class="w3-container w3-white">
             <br>
             <h4><b>BLOCKS</b></h4>
-            <p class="text-sm-left">Blockchain: electronic wallet and mining service (Study project in IT-Academy (Belarus Hi Tech Park).
-            Electronic wallet - Spring MVC web interface for managing transactions and initiating a mining session.
-            Mining service - Spring Boot application generating blocks for mining sessions on a multithreading basis and
-            verifying the consistency of the chain.</p>
+            <p class="text-sm-left">Look at the fully-system Blockchain tree!</p>
                 <div class="w3-col m8 s12">
                     <p><button type="button" onclick="window.location.href='https://github.com/VladislavProvalinsky/Blockchain-wallet';"
                     class="w3-button w3-padding-large w3-white w3-border"><b>SEE BLOCK TREE</b></button></p>

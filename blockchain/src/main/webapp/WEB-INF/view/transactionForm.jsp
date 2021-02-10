@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="/blockchain/static/css/transactionForm.css">
+    <script src="/blockchain/static/js/checkbox.js"></script>
 
 </head>
 
@@ -25,83 +26,53 @@
 <hr>
 </header>
 
-<h2>New Transaction Form</h2>
+<h2>New Transaction</h2>
 <br>
 <div class="row">
-  <div class="col-75">
+  <div class="col-50">
     <div class="container">
       <form action="/action_page.php">
-
         <div class="row">
           <div class="col-50">
-            <h3>Billing Address</h3>
-            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-            <input type="text" id="email" name="email" placeholder="john@example.com">
-            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-            <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" placeholder="New York">
+            <br>
+            <label for="sender"><i class="fa fa-address-book"></i> Sender Wallet ID</label>
+            <input type="text" value=${wallet.id} id="sender" name="senderPublicKey" required>
 
-            <div class="row">
-              <div class="col-50">
-                <label for="state">State</label>
-                <input type="text" id="state" name="state" placeholder="NY">
-              </div>
-              <div class="col-50">
-                <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" placeholder="10001">
-              </div>
-            </div>
+            <label for="receiver"><i class="fa fa-address-book-o"></i> Receiver Wallet ID</label>
+            <input type="text" id="receiver" name="receiverPublicKey" placeholder="${wallet.id}" required>
+
+            <label for="value"><i class="fa fa-bitcoin"></i> Value</label>
+            <input type="text" id="value" name="value" placeholder="${wallet.input}" pattern="\d*" required>
+
+            <label for="myCheck"><i class="fa fa-thumbs-o-up"></i>
+            Comission for miner: <input type="checkbox" id="myCheck" onclick="myFunction()"><small class="form-text text-muted">It will help to confirm your transaction faster</small></label>
+            <input type="hidden" id="comission" name="comission" placeholder="${wallet.input}" pattern="\d*">
+
+            <label for="senderPK"><i class="fa fa-key"></i> Signature</label>
+            <input type="password" id="senderPK" name="sender" placeholder="Insert your private wallet key to sign transaction" required>
           </div>
-
-          <div class="col-50">
-            <h3>Payment</h3>
-            <label for="fname">Accepted Cards</label>
-            <div class="icon-container">
-              <i class="fa fa-cc-visa" style="color:navy;"></i>
-              <i class="fa fa-cc-amex" style="color:blue;"></i>
-              <i class="fa fa-cc-mastercard" style="color:red;"></i>
-              <i class="fa fa-cc-discover" style="color:orange;"></i>
-            </div>
-            <label for="cname">Name on Card</label>
-            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-            <label for="ccnum">Credit card number</label>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-            <label for="expmonth">Exp Month</label>
-            <input type="text" id="expmonth" name="expmonth" placeholder="September">
-            <div class="row">
-              <div class="col-50">
-                <label for="expyear">Exp Year</label>
-                <input type="text" id="expyear" name="expyear" placeholder="2018">
-              </div>
-              <div class="col-50">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="352">
-              </div>
-            </div>
-          </div>
-
         </div>
         <label>
-          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+          <input type="checkbox" required> Agree with wallet policy <i class="fa fa-shield"></i>
         </label>
-        <input type="submit" value="Continue to checkout" class="btn">
+        <input type="submit" value="Create transaction" class="btn">
       </form>
     </div>
   </div>
   <div class="col-25">
-    <div class="container">
-      <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-      <p><a href="#">Product 1</a> <span class="price">$15</span></p>
-      <p><a href="#">Product 2</a> <span class="price">$5</span></p>
-      <p><a href="#">Product 3</a> <span class="price">$8</span></p>
-      <p><a href="#">Product 4</a> <span class="price">$2</span></p>
-      <hr>
-      <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
-    </div>
-  </div>
+
+        <div class="container">
+        <br>
+          <iframe frameborder="no" scrolling="no" width="100%" height="130"
+          src="https://yandex.ru/time/widget/?geoid=157&lang=en&layout=vert&type=digital&face=serif"></iframe>
+          <br>
+          <iframe src="https://ru.widgets.investing.com/top-cryptocurrencies?theme=darkTheme&hideTitle=true&roundedCorners=true"
+          width="100%" height="450" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe><div class="poweredBy"
+          style="font-family: Arial, Helvetica, sans-serif;"></div>
+
+        </div>
+      </div>
+
 </div>
 
 </body>

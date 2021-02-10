@@ -1,11 +1,13 @@
 package by.it.academy.blockchain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,8 @@ public class Block implements Serializable {
     private String previousHash; // хеш предыдущего блока (суммируется с данными)
 
     @Column(name = "date_of_creation", nullable = false)
-    private Timestamp timestamp; // дата создания блока
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime date; // дата создания блока
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL)

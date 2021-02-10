@@ -4,6 +4,7 @@ import by.it.academy.blockchain.domain.UserView;
 import by.it.academy.blockchain.pojo.User;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 

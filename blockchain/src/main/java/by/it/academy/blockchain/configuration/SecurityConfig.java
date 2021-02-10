@@ -1,6 +1,7 @@
 package by.it.academy.blockchain.configuration;
 
 import by.it.academy.blockchain.service.UserService;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import java.security.Security;
 
 
 @EnableWebSecurity
@@ -39,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //Доступ только для пользователей с ролью Администратор
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 //Доступ только для пользователей с ролью Юзер и Администратор
-                .antMatchers("/wallets/**",
+                .antMatchers("/users/**", "/wallets/**",
                         "/transactions/**",
                         "/blocks/**").hasAnyRole("USER", "ADMIN")
                 //Доступ разрешен всем пользователей

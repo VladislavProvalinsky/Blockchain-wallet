@@ -15,13 +15,13 @@
   <hr>
   <form action = "/blockchain/login" method="post" class="needs-validation" novalidate>
     <div class="form-group">
-      <label for="email">Email:</label>
+      <label for="email"><i class="fa fa-address-card-o"></i> Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email" name="username" required>
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="form-group">
-      <label for="password">Password:</label>
+      <label for="password"><i class="fa fa-key"></i> Password:</label>
       <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
