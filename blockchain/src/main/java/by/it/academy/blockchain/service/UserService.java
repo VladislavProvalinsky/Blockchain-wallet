@@ -73,7 +73,7 @@ public class UserService implements UserDetailsService{
 
     @Transactional
     @JsonView(UserView.RequiredFieldView.class)
-    public User getOne(String id) {
-        return userRepository.findById(Long.valueOf(id)).orElseThrow();
+    public User getOne(Long id) {
+        return userRepository.findById(id).orElseThrow();
     }
 }

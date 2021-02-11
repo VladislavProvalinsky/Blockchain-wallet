@@ -33,13 +33,13 @@ public class WalletService {
     FileWriterUtil fileWriterUtil;
 
     @Transactional
-    public Wallet getOne(Long id) {
+    public Wallet getOneByUserId(Long id) {
         Wallet wallet = null;
         try {
             wallet = (Wallet) entityManager.createQuery("From Wallet where user_id=:id")
                     .setParameter("id", id)
                     .getSingleResult();
-        } catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
         return wallet;
@@ -49,10 +49,10 @@ public class WalletService {
     public Wallet getOne(String walletId) {
         Wallet wallet = null;
         try {
-            wallet = (Wallet) entityManager.createQuery("From Wallet where user_id=:id")
+            wallet = (Wallet) entityManager.createQuery("From Wallet where id=:id")
                     .setParameter("id", walletId)
                     .getSingleResult();
-        } catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
         return wallet;
