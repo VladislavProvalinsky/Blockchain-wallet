@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Set;
@@ -35,10 +36,12 @@ public class UserService implements UserDetailsService{
     WalletService walletService;
 
 
+    @Transactional
     public User findByUsername (String username){
        return userRepository.findByUsername(username);
     }
 
+    @Transactional
     public void saveRegisteredUser(User user) {
         if (roleRepository.findById(1L).isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -68,8 +71,9 @@ public class UserService implements UserDetailsService{
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @JsonView(UserView.RequiredFieldView.class)
-    public User getOne(Long id) {
-        return userRepository.findById(id).orElseThrow();
+    public User getOne(String id) {
+        return userRepository.findById(Long.valueOf(id)).orElseThrow();
     }
 }

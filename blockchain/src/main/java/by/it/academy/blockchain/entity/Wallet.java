@@ -3,6 +3,8 @@ package by.it.academy.blockchain.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,23 +20,26 @@ public class Wallet implements Serializable {
     private static final long serialVersionUID = -3365706083289255873L;
 
     @Id
-//    @GeneratedValue(generator = "system-uuid") // генератор UUID
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String id; // публичный ключ и ID кошелька
 
-    @Column (name = "input", scale = 2)
-    private Double input;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ToString.Exclude
+    @OneToMany (cascade = CascadeType.ALL)
+    @JoinColumn (name = "wallet_id")
+    private List<Input> inputs = new ArrayList<>();
 
-    @Column (name = "output", scale = 2)
-    private Double output;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ToString.Exclude
+    @OneToMany (cascade = CascadeType.ALL)
+    @JoinColumn (name = "wallet_id")
+    private List<Output> outputs = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn (name = "wallet_id")
     private List<Transaction> transactions = new ArrayList<>(); // список транзакций в кошельке
 
-    public Wallet(String id, Double input) {
+    public Wallet(String id) {
         this.id = id;
-        this.input = input;
     }
 }

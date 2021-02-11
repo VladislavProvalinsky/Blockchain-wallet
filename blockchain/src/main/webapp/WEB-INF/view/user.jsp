@@ -39,7 +39,7 @@
           <div class="w3-container w3-white">
             <h4><b>YOUR WALLET</b></h4>
             <hr>
-            <h4><u><b>BALANCE:</b></u><cite> ${wallet.input} </cite><i class="fa fa-bitcoin"></i></h4></p>
+            <h4><u><b>BALANCE:</b></u><cite> ${actualBalance} </cite><i class="fa fa-bitcoin"></i></h4></p>
             <p class="text-sm-left">Your personal wallet! Make transactions, mine bitcoins, enjoy the life!</p>
                 <div class="w3-col m8 s12">
                     <p><button type="button" onclick="window.location.href='https://github.com/VladislavProvalinsky/Blockchain-wallet';"

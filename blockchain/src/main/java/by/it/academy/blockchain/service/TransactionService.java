@@ -1,6 +1,7 @@
 package by.it.academy.blockchain.service;
 
 import by.it.academy.blockchain.RSA.RSAGenUtil;
+import by.it.academy.blockchain.entity.Output;
 import by.it.academy.blockchain.entity.Transaction;
 import by.it.academy.blockchain.entity.Wallet;
 import by.it.academy.blockchain.enums.TransactionStatus;
@@ -32,6 +33,8 @@ public class TransactionService {
         transaction.setSignature(signature);
         // сетим в кошелек готовую транзакцию
         wallet.getTransactions().add(transaction);
+        // обновляем аутпут кошелька
+        wallet.getOutputs().add(new Output(transaction.getValue() + transaction.getComission()));
         // апдейтим кошелек
         walletService.updateWallet(wallet);
     }

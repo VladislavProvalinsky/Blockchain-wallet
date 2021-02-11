@@ -1,10 +1,7 @@
 package by.it.academy.blockchain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -35,7 +32,7 @@ public class Transaction implements Serializable {
     @Column (name = "value", nullable = false, scale = 2)
     private Double value; // сколько хотим потратить (зависит от input и output предыдущих транзакций)
 
-    @Column (name = "comission", nullable = false, scale = 2)
+    @Column (name = "comission", scale = 2)
     private Double comission; // комиссия для майнера (влияет на скорость подтверждения транзакции)
 
     @Column(name = "date_of_creation", nullable = false)

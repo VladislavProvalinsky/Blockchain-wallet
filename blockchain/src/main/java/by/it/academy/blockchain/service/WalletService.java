@@ -3,15 +3,19 @@ package by.it.academy.blockchain.service;
 import by.it.academy.blockchain.RSA.BCKeysFactoryUtil;
 import by.it.academy.blockchain.RSA.FileWriterUtil;
 import by.it.academy.blockchain.RSA.RSAGenUtil;
+import by.it.academy.blockchain.entity.Input;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.entity.Wallet;
 import by.it.academy.blockchain.repository.WalletRepository;
 import org.bouncycastle.jcajce.provider.asymmetric.RSA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.security.KeyPair;
+import java.util.stream.DoubleStream;
 
 @Service
 public class WalletService {
@@ -28,20 +32,34 @@ public class WalletService {
     @Autowired
     FileWriterUtil fileWriterUtil;
 
+    @Transactional
     public Wallet getOne(Long id) {
-        return (Wallet) entityManager.createQuery("From Wallet where user_id=:id")
-                .setParameter("id", id)
-                .getSingleResult();
-
+        Wallet wallet = null;
+        try {
+            wallet = (Wallet) entityManager.createQuery("From Wallet where user_id=:id")
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e){
+            return null;
+        }
+        return wallet;
     }
 
+    @Transactional
     public Wallet getOne(String walletId) {
-        return (Wallet) entityManager.createQuery("From Wallet where id=:id")
-                .setParameter("id", walletId)
-                .getSingleResult();
+        Wallet wallet = null;
+        try {
+            wallet = (Wallet) entityManager.createQuery("From Wallet where user_id=:id")
+                    .setParameter("id", walletId)
+                    .getSingleResult();
+        } catch (NoResultException e){
+            return null;
+        }
+        return wallet;
     }
 
-    public void updateWallet (Wallet wallet) {
+    @Transactional
+    public void updateWallet(Wallet wallet) {
         entityManager.merge(wallet);
     }
 
@@ -50,6 +68,15 @@ public class WalletService {
         String privateKey = RSAGenUtil.stringPrivateKey(keyPair.getPrivate());
         String publicKey = RSAGenUtil.stringPublicKey(keyPair.getPublic());
         fileWriterUtil.writeKeyToFile(user.getUsername(), privateKey);
-        return new Wallet(publicKey, 10.0);
+        // создаем новый кошелек и сетим в него первый инпут и баланс
+        Wallet wallet = new Wallet(publicKey);
+        wallet.getInputs().add(new Input(10.0));
+        return wallet;
+    }
+
+    public Double getActualBalance(Wallet wallet) {
+        double inputsSum = wallet.getInputs().stream().flatMapToDouble(e -> DoubleStream.of(e.getValue())).sum();
+        double outputsSum = wallet.getOutputs().stream().flatMapToDouble(e -> DoubleStream.of(e.getValue())).sum();
+        return inputsSum - outputsSum;
     }
 }
