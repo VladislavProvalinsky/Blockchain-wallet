@@ -14,7 +14,8 @@
 
     <link rel="stylesheet" href="/blockchain/static/css/userCurtainMenu.css">
     <link rel="stylesheet" href="/blockchain/static/css/personPhoto.css">
-    <link rel="stylesheet" href="/blockchain/static/css/transactionForm.css">
+    <link rel="stylesheet" href="/blockchain/static/css/table.css">
+    <link rel="stylesheet" href="/blockchain/static/css/search.css">
     <script src="/blockchain/static/js/userCurtainMenu.js"></script>
 
 </head>
@@ -52,41 +53,50 @@
             <h4>${user.name} ${user.surname}</h4>
         </div>
         <hr color="grey">
-    <a href="#">Wallets</a>
-    <a href="#">Transactions</a>
+    <a href="/blockchain/users/${user.id}">Home</a>
+    <a href="/blockchain/users/${user.id}/transactionForm">Create Transaction</a>
     <a href="#">Block Tree</a>
-    <a href="#">Contact</a>
     <a href="http://localhost:8080/blockchain/logout">Logout</a>
   </div>
 
 <div class="row">
+    <div class="col-75">
+      <h2>Your Transactions Info</h2>
+    </div>
+    <div class="col-25">
+    <div class="container-fluid">
+        <form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
+          <input type="text" placeholder="Search.." name="search2">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    </div>
+</div>
+<div class="row">
 <div class="col-50">
     <div class="w3-container">
-      <h2>Your Transactions</h2>
+      <div style="overflow-x:auto;">
       <table class="w3-table-all w3-hoverable">
         <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Points</th>
+          <th>&#8470;</th>
+          <th>Value</th>
+          <th>Comission</th>
+          <th>Date of creation</th>
+          <th>Current status</th>
         </tr>
+        <c:forEach items="${transactionList}" var="transaction" varStatus="loop">
         <tr>
-          <td>Jill</td>
-          <td>Smith</td>
-          <td>50</td>
+          <td>${loop.index+1}</td>
+          <td>${transaction.value} <i class="fa fa-btc"></i></td>
+          <td>${transaction.comission} <i class="fa fa-btc"></i></td>
+          <td>${transaction.date}</td>
+          <td>${transaction.status}</td>
         </tr>
-        <tr>
-          <td>Eve</td>
-          <td>Jackson</td>
-          <td>94</td>
-        </tr>
-        <tr>
-          <td>Adam</td>
-          <td>Johnson</td>
-          <td>67</td>
-        </tr>
+        </c:forEach>
       </table>
+      </div>
     </div>
-    </div>
+</div>
 </div>
 
 

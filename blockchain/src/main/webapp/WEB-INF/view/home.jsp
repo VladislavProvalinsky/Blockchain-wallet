@@ -1,6 +1,7 @@
 <jsp:include page = "header.jsp"/>
 
 <body class="w3-light-grey">
+<script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/coinPriceBlock.js"></script>
 
 <div class="w3-content" style="max-width:1400px">
 <!-- Header -->

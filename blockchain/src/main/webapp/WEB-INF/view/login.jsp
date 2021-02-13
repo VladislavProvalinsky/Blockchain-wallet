@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <jsp:include page = "header.jsp"/>
 
@@ -17,6 +19,7 @@
     <div class="form-group">
       <label for="email"><i class="fa fa-address-card-o"></i> Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email" name="username" required>
+      ${error}
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>

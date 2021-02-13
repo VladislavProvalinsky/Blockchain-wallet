@@ -5,6 +5,7 @@
 <jsp:include page = "header.jsp"/>
 
 <body class="w3-light-grey">
+<script src="/blockchain/static/js/validateRegistration.js"></script>
 
 <div class="w3-content" style="max-width:1400px">
 <!-- Header -->
@@ -41,7 +42,7 @@
   </div>
   <div class="form-group">
      <label for="pwd"><i class="fa fa-key"></i> Confirm password:</label>
-     <input type="password" path="password" class="form-control" id="pwd" placeholder="Confirm your password" name="passwordConfirm" pattern="[\d*A-Za-z]*" required>
+     <input type="password" path="password" class="form-control" id="pwd2" placeholder="Confirm your password" name="passwordConfirm" pattern="[\d*A-Za-z]*" required>
      ${passwordError}
   </div>
       <div class="form-group form-check">

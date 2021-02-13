@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "outputs")
@@ -19,10 +20,10 @@ public class Output {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String id;
 
-    @Column(name = "value", nullable = false, scale = 2)
-    private Double value;
+    @Column(name = "value", nullable = false, precision = 19, scale = 4)
+    private BigDecimal value;
 
-    public Output(double value) {
+    public Output(BigDecimal value) {
         this.value = value;
     }
 }

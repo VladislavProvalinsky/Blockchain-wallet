@@ -14,11 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.math.BigDecimal;
 import java.security.KeyPair;
+import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
 
 @Service
 public class WalletService {
+
+    private static final Logger log = Logger.getLogger(WalletService.class.getName());
 
     @Autowired
     EntityManager entityManager;
@@ -70,13 +74,13 @@ public class WalletService {
         fileWriterUtil.writeKeyToFile(user.getUsername(), privateKey);
         // создаем новый кошелек и сетим в него первый инпут и баланс
         Wallet wallet = new Wallet(publicKey);
-        wallet.getInputs().add(new Input(10.0));
+        wallet.getInputs().add(new Input(BigDecimal.valueOf(10)));
         return wallet;
     }
 
     public Double getActualBalance(Wallet wallet) {
-        double inputsSum = wallet.getInputs().stream().flatMapToDouble(e -> DoubleStream.of(e.getValue())).sum();
-        double outputsSum = wallet.getOutputs().stream().flatMapToDouble(e -> DoubleStream.of(e.getValue())).sum();
+        double inputsSum = wallet.getInputs().stream().flatMapToDouble(e -> DoubleStream.of(e.getValue().doubleValue())).sum();
+        double outputsSum = wallet.getOutputs().stream().flatMapToDouble(e -> DoubleStream.of(e.getValue().doubleValue())).sum();
         return inputsSum - outputsSum;
     }
 }

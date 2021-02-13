@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.security.Security;
@@ -29,6 +30,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
         return new MySimpleUrlAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler myAuthenticationFailureHandler (){
+        return new MySimpleAuthentificationFailureHandler();
     }
 
     @Override
@@ -55,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 //Перенарпавление на главную страницу после успешного входа
                 .successHandler(myAuthenticationSuccessHandler())
+                .failureHandler(myAuthenticationFailureHandler())
                 .permitAll()
                 .and()
                 .logout()

@@ -18,10 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService{
+
+    private static final Logger log = Logger.getLogger(UserService.class.getName());
 
     @Autowired
     private UserRepository userRepository;

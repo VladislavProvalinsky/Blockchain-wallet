@@ -51,10 +51,9 @@
             <h4>${user.name} ${user.surname}</h4>
         </div>
         <hr color="grey">
-    <a href="#">Wallets</a>
-    <a href="#">Transactions</a>
+    <a href="/blockchain/users/${user.id}">Home</a>
+    <a href="/blockchain/users/${user.id}/transactions">Transactions</a>
     <a href="#">Block Tree</a>
-    <a href="#">Contact</a>
     <a href="http://localhost:8080/blockchain/logout">Logout</a>
   </div>
 

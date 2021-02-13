@@ -4,6 +4,7 @@ import by.it.academy.blockchain.comunication.UserCommunication;
 import by.it.academy.blockchain.entity.Transaction;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.entity.Wallet;
+import by.it.academy.blockchain.pojo.TransactionMock;
 import by.it.academy.blockchain.service.TransactionService;
 import by.it.academy.blockchain.service.UserService;
 import by.it.academy.blockchain.service.WalletService;
@@ -11,8 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 @RestController
 public class UserController {
+
+    private static final Logger log = Logger.getLogger(UserController.class.getName());
 
     @Autowired
     UserService userService;
@@ -57,22 +69,24 @@ public class UserController {
                                            @ModelAttribute("privateKey") String privateKey,
                                            @ModelAttribute("transaction") Transaction transaction,
                                            ModelAndView modelAndView) {
-        if (transaction.getComission() == null) transaction.setComission(0.0);
+        if (transaction.getComission() == null) transaction.setComission(BigDecimal.ZERO);
+        transaction.setValue(transaction.getValue().setScale(4, RoundingMode.CEILING));
+        transaction.setComission(transaction.getComission().setScale(4, RoundingMode.CEILING));
         Wallet wallet = walletService.getOneByUserId(id);
         if (walletService.getOne(transaction.getReceiverPublicKey()) == null) {
-            System.out.println("Check 1 --------------------");
+            log.info("Check 1 ------------------------");
             modelAndView.addObject("receiverPublicKeyError", "No such receiver wallet in blockchain.");
             modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
         } else if (walletService.getOne(transaction.getSenderPublicKey()) == null) {
-            System.out.println("Check 2 --------------------");
+            log.info("Check 2 ------------------------");
             modelAndView.addObject("senderPublicKeyError", "Your walletID, was incorrect.");
             modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
-        } else if ((transaction.getValue() + transaction.getComission()) > walletService.getActualBalance(wallet)) {
-            System.out.println("Check 3 --------------------");
+        } else if ((transaction.getValue().doubleValue() + transaction.getComission().doubleValue()) > walletService.getActualBalance(wallet)) {
+            log.info("Check 3 ------------------------");
             modelAndView.addObject("valueError", "Value of transaction more than your balance.");
             modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
         } else {
-            System.out.println("-------------------------");
+            log.info("------------------------");
             transactionService.putNewTransaction(wallet, transaction, privateKey);
             modelAndView.setViewName("redirect:/users/" + id);
         }
@@ -80,13 +94,15 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/transactions")
-    public ModelAndView getTransactionsList (@PathVariable("id") Long id, ModelAndView modelAndView) {
+    public ModelAndView getTransactionsList(@PathVariable("id") Long id, ModelAndView modelAndView) {
         User user = userService.getOne(id);
         Wallet wallet = walletService.getOneByUserId(id);
-//        by.it.academy.blockchain.pojo.User user = userCommunication.getUser(id);
+        List<Transaction> transactions = wallet.getTransactions();
+        // :) эта фигня чисто для view, никаких подделок не беспокойтесь)))
+        List<TransactionMock> mockingTransactions = TransactionMock.getMockingTransactions(transactions);
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);
-        modelAndView.addObject("transactionList", wallet.getTransactions());
+        modelAndView.addObject("transactionList", mockingTransactions);
         modelAndView.setViewName("userTransactions");
         return modelAndView;
     }

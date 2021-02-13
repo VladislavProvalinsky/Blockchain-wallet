@@ -16,6 +16,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class User implements Serializable {
     private static final long serialVersionUID = -4951871627773349499L;
 
@@ -59,10 +61,9 @@ public class User implements Serializable {
     @JsonView(UserView.FullView.class)
     private List<Wallet> wallets = new ArrayList<>(); // кошелек клиента
 
-    public User(String name, String surname, String password, String username, String mobile) {
+    public User(String name, String surname, String username, String mobile) {
         this.name = name;
         this.surname = surname;
-        this.password = password;
         this.username = username;
         this.mobile = mobile;
     }

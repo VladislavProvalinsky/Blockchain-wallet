@@ -25,3 +25,8 @@ document.getElementById("pwd").addEventListener("invalid", myFunction);
     function myFunction() {
         alert("Password shouldn't have symbols! Only numbers and letters");
     }
+
+document.getElementById("pwd2").addEventListener("invalid", myFunction);
+    function myFunction() {
+        alert("Password shouldn't have symbols! Only numbers and letters");
+    }
