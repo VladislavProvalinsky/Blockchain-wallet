@@ -59,21 +59,23 @@
     <a href="http://localhost:8080/blockchain/logout">Logout</a>
   </div>
 
-<div class="row">
-    <div class="col-75">
-      <h2>Your Transactions Info</h2>
+
+
+<div class="w3-row">
+    <div class="w3-rest w3-container">
+
+        <h2>Your Transactions Info</h2>
+    <div class="w3-col w3-right" style="width:300px">
+    <form class="example" action="/action_page.php" style="margin:auto;max-width:300px" >
+        <input type="text" placeholder="Search.." name="search2">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
     </div>
-    <div class="col-25">
-    <div class="container-fluid">
-        <form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
-          <input type="text" placeholder="Search.." name="search2">
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
-    </div>
+   </div>
 </div>
-<div class="row">
-<div class="col-50">
+
+<div class="w3-row">
+<div class="w3-col-50">
     <div class="w3-container">
       <div style="overflow-x:auto;">
       <table class="w3-table-all w3-hoverable">
