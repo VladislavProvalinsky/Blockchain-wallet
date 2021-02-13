@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="/blockchain/static/css/table.css">
     <link rel="stylesheet" href="/blockchain/static/css/search.css">
     <script src="/blockchain/static/js/userCurtainMenu.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -63,13 +66,15 @@
 
 <div class="w3-row">
     <div class="w3-rest w3-container">
-
         <h2>Your Transactions Info</h2>
+        <button type="button" class="btn btn-success" onclick="window.location.href='/blockchain/users/${user.id}/transactions'"><i class="fa fa-refresh"></i> Refresh</button>
     <div class="w3-col w3-right" style="width:300px">
-    <form class="example" action="/action_page.php" style="margin:auto;max-width:300px" >
-        <input type="text" placeholder="Search.." name="search2">
+    <form class="example" action="/blockchain/users/${user.id}/search" style="margin:auto;max-width:300px">
+        <input type="text" placeholder="Search.." name="searchParam" pattern="[\w\S]*" required>
         <button type="submit"><i class="fa fa-search"></i></button>
     </form>
+
+
     </div>
    </div>
 </div>
