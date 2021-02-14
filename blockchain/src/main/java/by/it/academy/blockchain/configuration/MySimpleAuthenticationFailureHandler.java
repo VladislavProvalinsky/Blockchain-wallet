@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class MySimpleAuthentificationFailureHandler implements AuthenticationFailureHandler {
+public class MySimpleAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(
@@ -19,6 +19,6 @@ public class MySimpleAuthentificationFailureHandler implements AuthenticationFai
             throws IOException, ServletException {
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.sendRedirect("/blockchain/login");
+        response.sendRedirect("/login/error");
     }
 }

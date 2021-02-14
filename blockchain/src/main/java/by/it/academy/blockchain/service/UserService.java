@@ -6,25 +6,15 @@ import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.repository.RoleRepository;
 import by.it.academy.blockchain.repository.UserRepository;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 @Service
-public class UserService implements UserDetailsService{
-
-    private static final Logger log = Logger.getLogger(UserService.class.getName());
+@Log
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -59,24 +49,9 @@ public class UserService implements UserDetailsService{
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
-        if (user==null){
-            throw new UsernameNotFoundException(String.format("User %s not found!", username));
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthority(user.getRoles()));
-    }
-
-    private Collection<? extends GrantedAuthority> mapRolesToAuthority (Set<Role> roles){
-        return roles.stream()
-                .map(el-> new SimpleGrantedAuthority(el.getName()))
-                .collect(Collectors.toList());
-    }
-
     @Transactional
     @JsonView(UserView.RequiredFieldView.class)
     public User getOne(Long id) {
-        return userRepository.findById(id).orElseThrow();
+        return userRepository.findById(id).orElseThrow(); // убрать однозданчно!
     }
 }

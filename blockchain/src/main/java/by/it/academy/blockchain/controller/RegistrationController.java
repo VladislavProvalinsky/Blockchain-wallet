@@ -3,6 +3,7 @@ package by.it.academy.blockchain.controller;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.repository.UserRepository;
 import by.it.academy.blockchain.service.UserService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.logging.Logger;
-
 @Controller
+@Log
 public class RegistrationController {
-
-    private static final Logger log = Logger.getLogger(RegistrationController.class.getName());
 
     @Autowired
     UserRepository userRepository;
