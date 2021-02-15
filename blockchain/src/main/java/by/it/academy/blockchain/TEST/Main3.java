@@ -2,14 +2,13 @@ package by.it.academy.blockchain.TEST;
 
 import by.it.academy.blockchain.entity.Transaction;
 import by.it.academy.blockchain.enums.TransactionStatus;
-import by.it.academy.blockchain.pojo.TransactionMock;
+import by.it.academy.blockchain.dto.TransactionMock;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,11 +1,13 @@
-package by.it.academy.blockchain.pojo;
+package by.it.academy.blockchain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Role{
 
     private Long id;

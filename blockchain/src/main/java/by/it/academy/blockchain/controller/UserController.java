@@ -4,7 +4,7 @@ import by.it.academy.blockchain.comunication.UserCommunication;
 import by.it.academy.blockchain.entity.Transaction;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.entity.Wallet;
-import by.it.academy.blockchain.pojo.TransactionMock;
+import by.it.academy.blockchain.dto.TransactionMock;
 import by.it.academy.blockchain.service.TransactionService;
 import by.it.academy.blockchain.service.UserService;
 import by.it.academy.blockchain.service.WalletService;
@@ -14,12 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @RestController
 public class UserController {

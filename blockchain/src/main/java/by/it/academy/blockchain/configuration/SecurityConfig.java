@@ -1,9 +1,11 @@
 package by.it.academy.blockchain.configuration;
 
+import by.it.academy.blockchain.configuration.jwt.JwtAuthenticationEntryPoint;
 import by.it.academy.blockchain.configuration.jwt.JwtFilter;
-import by.it.academy.blockchain.service.CustomUserDetailsService;
+import by.it.academy.blockchain.configuration.jwt.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,19 +17,27 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    CustomUserDetailsService customUserDetailsService;
+    JwtUserDetailsService jwtUserDetailsService;
 
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
         return new MySimpleUrlAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -42,43 +52,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                //Доступ только для незарегестрированных пользователей
-                .antMatchers("/registration/**").not().fullyAuthenticated()
-                //Доступ только для пользователей с ролью Юзер и Админ
-                .antMatchers("/users/**").hasAnyRole("USER", "ADMIN") // Делаем /user/{id}/**
-                //Доступ только для пользователей с ролью Администратор
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                //Доступ разрешен всем пользователей
-                .antMatchers("/", "/static/**").permitAll()
-                //Все остальные страницы требуют аутентификации
-                .anyRequest().authenticated()
+                    .authorizeRequests()
+                    //Доступ только для незарегестрированных пользователей
+                    .antMatchers("/registration/**").not().fullyAuthenticated()
+                    //Доступ только для пользователей с ролью Юзер и Админ
+                    .antMatchers("/users/**").hasAnyRole("USER", "ADMIN") // Делаем /user/{id}/**
+                    //Доступ только для пользователей с ролью Администратор
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    //Доступ разрешен всем пользователей
+                    .antMatchers("/", "/static/**").permitAll()
+                    //Все остальные страницы требуют аутентификации
+                    .anyRequest().authenticated()
                 .and()
-                //Настройка для входа в систему
-                .formLogin()
-                .loginPage("/login")
-                //Перенарпавление на главную страницу после успешного входа
-                .successHandler(myAuthenticationSuccessHandler())
-//                .failureHandler(myAuthenticationFailureHandler())
-                .permitAll()
+                    //Настройка для входа в систему
+                    .formLogin()
+                    .loginPage("/login")
+//                    .failureUrl("/login")
+                    //Перенарпавление на главную страницу после успешного входа
+                    .successHandler(myAuthenticationSuccessHandler())
+//                  .failureHandler(myAuthenticationFailureHandler())
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll()
-                .logoutSuccessUrl("/")
+                    .logout()
+                    .permitAll()
+                    .logoutSuccessUrl("/")
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
+                    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(customUserDetailsService);
+        authenticationProvider.setUserDetailsService(jwtUserDetailsService);
         return authenticationProvider;
     }
 

@@ -1,12 +1,14 @@
-package by.it.academy.blockchain.pojo;
+package by.it.academy.blockchain.dto;
 
 import by.it.academy.blockchain.enums.TransactionStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Transaction {
 
     private String id;

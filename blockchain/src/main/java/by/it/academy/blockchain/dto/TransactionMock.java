@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.pojo;
+package by.it.academy.blockchain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

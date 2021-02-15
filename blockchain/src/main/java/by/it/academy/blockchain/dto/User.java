@@ -1,5 +1,6 @@
-package by.it.academy.blockchain.pojo;
+package by.it.academy.blockchain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
     private Long id; // id клиента в системе

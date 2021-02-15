@@ -3,7 +3,7 @@ package by.it.academy.blockchain.controller;
 import by.it.academy.blockchain.entity.Transaction;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.entity.Wallet;
-import by.it.academy.blockchain.pojo.TransactionMock;
+import by.it.academy.blockchain.dto.TransactionMock;
 import by.it.academy.blockchain.service.UserService;
 import by.it.academy.blockchain.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
