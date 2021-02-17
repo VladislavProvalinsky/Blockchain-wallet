@@ -14,9 +14,6 @@ public class LoginController {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @Autowired
-    DaoAuthenticationProvider daoAuthenticationProvider;
-
     @GetMapping("/login")
     public ModelAndView returnLoginPage (ModelAndView modelAndView) {
         modelAndView.setViewName("login");
@@ -25,7 +22,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public ModelAndView returnLoginPageWithError (ModelAndView modelAndView) {
-        daoAuthenticationProvider.
         modelAndView.addObject("error", "Wrong password or email");
         modelAndView.setViewName("login");
         return modelAndView;

@@ -4,6 +4,7 @@ import by.it.academy.blockchain.configuration.jwt.JwtAuthenticationEntryPoint;
 import by.it.academy.blockchain.configuration.jwt.JwtFilter;
 import by.it.academy.blockchain.configuration.jwt.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -23,9 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     JwtUserDetailsService jwtUserDetailsService;
-
-    @Autowired
-    private JwtFilter jwtFilter;
 
     @Autowired
     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -48,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .httpBasic().disable()
+//                .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -64,6 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     //Все остальные страницы требуют аутентификации
                     .anyRequest().authenticated()
                 .and()
+                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
+                    .addFilterBefore(jwtFilterFilterRegistrationBean().getFilter(), UsernamePasswordAuthenticationFilter.class)
                     //Настройка для входа в систему
                     .formLogin()
                     .loginPage("/login")
@@ -75,11 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .permitAll()
-                    .logoutSuccessUrl("/")
-                .and()
-                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                    .logoutSuccessUrl("/");
     }
 
 
@@ -89,6 +86,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService(jwtUserDetailsService);
         return authenticationProvider;
+    }
+
+    @Bean
+    public FilterRegistrationBean<JwtFilter> jwtFilterFilterRegistrationBean () {
+        FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new JwtFilter());
+        registrationBean.addUrlPatterns("/users/*", "/admin/*");
+        return registrationBean;
     }
 
 }
