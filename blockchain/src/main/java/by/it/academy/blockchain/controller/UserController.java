@@ -8,6 +8,7 @@ import by.it.academy.blockchain.dto.TransactionMock;
 import by.it.academy.blockchain.service.TransactionService;
 import by.it.academy.blockchain.service.UserService;
 import by.it.academy.blockchain.service.WalletService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,9 +19,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
+@Log
+@RequestMapping("/users/{id}")
 public class UserController {
-
-    private static final Logger log = Logger.getLogger(UserController.class.getName());
 
     @Autowired
     UserService userService;
@@ -35,20 +36,20 @@ public class UserController {
     UserCommunication userCommunication;
 
 
-    @GetMapping("/users/{id}")
-    public ModelAndView homeUser(@PathVariable("id") Long id, ModelAndView modelAndView) {
-        User user = userService.getOne(id);
-        Wallet wallet = walletService.getOneByUserId(id);
+    @GetMapping
+    public ModelAndView homeUser(@PathVariable("id") String id, ModelAndView modelAndView) {
+        User user = userService.getOne(Long.valueOf(id));
+        Wallet wallet = walletService.getOneByUserId(Long.valueOf(id));
         Double actualBalance = walletService.getActualBalance(wallet);
 //        by.it.academy.blockchain.pojo.User user = userCommunication.getUser(id);
         modelAndView.addObject("actualBalance", actualBalance);
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);
-        modelAndView.setViewName("user");
+        modelAndView.setViewName("userHome");
         return modelAndView;
     }
 
-    @GetMapping("/users/{id}/transactionForm")
+    @GetMapping("/transactionForm")
     public ModelAndView getTransactionForm(@PathVariable("id") Long id, ModelAndView modelAndView) {
         User user = userService.getOne(id);
         Wallet wallet = walletService.getOneByUserId(id);
@@ -60,7 +61,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @PostMapping("/users/{id}/new_transaction")
+    @PostMapping("/new_transaction")
     public ModelAndView postNewTransaction(@PathVariable("id") Long id,
                                            @ModelAttribute("privateKey") String privateKey,
                                            @ModelAttribute("transaction") Transaction transaction,
@@ -89,7 +90,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/users/{id}/transactions")
+    @GetMapping("/transactions")
     public ModelAndView getTransactionsList(@PathVariable("id") Long id, ModelAndView modelAndView) {
         User user = userService.getOne(id);
         Wallet wallet = walletService.getOneByUserId(id);

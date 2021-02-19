@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @Log
+@RequestMapping("/registration")
 public class RegistrationController {
 
     @Autowired
@@ -21,7 +23,7 @@ public class RegistrationController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/registration")
+    @GetMapping
     public ModelAndView getRegistrationPage (ModelAndView modelAndView) {
         User user = User.builder()
                 .name("Vlad")
@@ -34,7 +36,7 @@ public class RegistrationController {
         return modelAndView;
     }
 
-    @PostMapping("/registration/new_user")
+    @PostMapping("/new_user")
     public ModelAndView addUser(@ModelAttribute("user") User user,
                                 @ModelAttribute("passwordConfirm") String confirmed,
                                 ModelAndView modelAndView) {

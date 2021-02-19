@@ -8,12 +8,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 
-@Component
 @Log
+@Service
 public class JwtProvider {
 
     @Value("${jwt.secret}")
@@ -67,12 +68,16 @@ public class JwtProvider {
             return true;
         } catch (ExpiredJwtException expEx) {
             log.severe("Token expired");
+            throw expEx;
         } catch (UnsupportedJwtException unsEx) {
             log.severe("Unsupported jwt");
+            throw unsEx;
         } catch (MalformedJwtException mjEx) {
             log.severe("Malformed jwt");
+            throw mjEx;
         } catch (SignatureException sEx) {
             log.severe("Invalid signature");
+            throw sEx;
         } catch (Exception e) {
             log.severe("Invalid token");
         }

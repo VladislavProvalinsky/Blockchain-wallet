@@ -1,7 +1,11 @@
 package by.it.academy.blockchain.configuration;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import javax.servlet.ServletException;
@@ -9,7 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Getter
+@Setter
 public class MySimpleAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void onAuthenticationFailure(
@@ -18,7 +26,7 @@ public class MySimpleAuthenticationFailureHandler implements AuthenticationFailu
             AuthenticationException exception)
             throws IOException, ServletException {
 
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.sendRedirect("/login/error");
+        request.setAttribute("error", "Bad login or password!");
+        redirectStrategy.sendRedirect(request, response, "/login");
     }
 }
