@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.configuration;
+package by.it.academy.miningservice.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
-public class RestClientConfig {
+public class RestConfig {
 
     @Autowired
     Jackson2ObjectMapperBuilder builder;
@@ -45,7 +45,7 @@ public class RestClientConfig {
     @Bean
     public MappingJackson2HttpMessageConverter converter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
+        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
         converter.setObjectMapper(objectMapper());
         return converter;
     }

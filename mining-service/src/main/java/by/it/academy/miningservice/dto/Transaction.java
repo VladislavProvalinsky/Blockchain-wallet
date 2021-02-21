@@ -1,6 +1,5 @@
-package by.it.academy.blockchain.dto;
+package by.it.academy.miningservice.dto;
 
-import by.it.academy.blockchain.enums.TransactionStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 

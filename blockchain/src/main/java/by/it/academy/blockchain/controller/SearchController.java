@@ -1,11 +1,12 @@
 package by.it.academy.blockchain.controller;
 
 import by.it.academy.blockchain.entity.Transaction;
+import by.it.academy.blockchain.entity.TransactionMock;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.entity.Wallet;
-import by.it.academy.blockchain.dto.TransactionMock;
 import by.it.academy.blockchain.service.UserService;
 import by.it.academy.blockchain.service.WalletService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

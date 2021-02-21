@@ -1,12 +1,12 @@
 package by.it.academy.blockchain.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +19,18 @@ import java.util.List;
 public class Block implements Serializable {
     private static final long serialVersionUID = -4682847241419425655L;
 
-    //FIXME
     @Id
-    @GeneratedValue(generator = "system-uuid") // генератор UUID
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String id; // хеш блока (который майнится по алгоритму: hash всех конфирмд транзакций + previous hash блока = 0x5...хеш)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column (name = "hash")
+    private String hash; // хеш блока (который майнится по алгоритму: hash всех конфирмд транзакций + previous hash блока = 0x5...хеш)
 
     @Column (name = "previous_hash", nullable = false)
     private String previousHash; // хеш предыдущего блока (суммируется с данными)
 
     @Column(name = "date_of_creation", nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date; // дата создания блока
 
     @ToString.Exclude

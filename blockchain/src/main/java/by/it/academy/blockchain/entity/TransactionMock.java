@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.dto;
+package by.it.academy.blockchain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

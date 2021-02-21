@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.enums;
+package by.it.academy.miningservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +16,6 @@ public enum TransactionStatus {
     WRONG_SIGNATURE ("WRONG_SIGNATURE"),
     VERIFIED ("VERIFIED"),
     IN_BLOCK ("IN_BLOCK");
-
-
 
     private String name;
 }

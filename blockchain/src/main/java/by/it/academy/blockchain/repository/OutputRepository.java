@@ -1,11 +1,11 @@
 package by.it.academy.blockchain.repository;
 
-import by.it.academy.blockchain.entity.Block;
+import by.it.academy.blockchain.entity.Output;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BlockRepository extends JpaRepository<Block, String> {
+public interface OutputRepository extends JpaRepository<Output, String> {
+
 
 }

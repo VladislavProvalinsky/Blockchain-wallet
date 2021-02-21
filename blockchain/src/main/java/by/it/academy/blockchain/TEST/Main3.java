@@ -1,8 +1,9 @@
 package by.it.academy.blockchain.TEST;
 
 import by.it.academy.blockchain.entity.Transaction;
+import by.it.academy.blockchain.entity.TransactionMock;
 import by.it.academy.blockchain.enums.TransactionStatus;
-import by.it.academy.blockchain.dto.TransactionMock;
+
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

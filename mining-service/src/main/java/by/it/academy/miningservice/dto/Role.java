@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.dto;
+package by.it.academy.miningservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
