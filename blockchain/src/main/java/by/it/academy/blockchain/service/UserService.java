@@ -29,7 +29,6 @@ public class UserService {
     WalletService walletService;
 
 
-    @Transactional
     public User findByUsername (String username){
        return userRepository.findByUsername(username);
     }
@@ -49,7 +48,6 @@ public class UserService {
         }
     }
 
-    @Transactional
     @JsonView(UserView.RequiredFieldView.class)
     public User getOne(Long id) {
         return userRepository.findById(id).orElseThrow(); // убрать однозданчно!

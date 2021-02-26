@@ -5,6 +5,7 @@ import by.it.academy.blockchain.configuration.jwt.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -49,33 +50,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .csrf().disable()
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and()
-                    .authorizeRequests()
-                    //Доступ только для незарегестрированных пользователей
-                    .antMatchers("/registration/**").not().fullyAuthenticated()
-                    //Доступ только для пользователей с ролью Юзер и Админ
-                    .antMatchers("/users/**").hasAnyRole("USER", "ADMIN") // Делаем /user/{id}/**
-                    //Доступ только для пользователей с ролью Администратор
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    //Доступ разрешен всем пользователей
-                    .antMatchers("/", "/static/**", "/transactions/**", "/blocks/**").permitAll()
-                    //Все остальные страницы требуют аутентификации
-                    .anyRequest().authenticated()
+                .authorizeRequests()
+                //Доступ только для незарегестрированных пользователей
+                .antMatchers("/registration/**").not().fullyAuthenticated()
+                //Доступ только для пользователей с ролью Юзер и Админ
+                .antMatchers("/users/**").hasAnyRole("USER", "ADMIN") // Делаем /user/{id}/**
+                //Доступ только для пользователей с ролью Администратор
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                //Доступ разрешен всем пользователей
+                .antMatchers("/", "/static/**").permitAll()
+                //Все остальные страницы требуют аутентификации
+                .anyRequest().authenticated()
                 .and()
 //                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
 //                .and()
 //                    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 //                    //Настройка для входа в систему
-                    .formLogin()
-                    .loginPage("/login")
+                .formLogin()
+                .loginPage("/login")
 //                    .failureUrl("/login")
-                    //Перенарпавление на главную страницу после успешного входа
-                    .successHandler(myAuthenticationSuccessHandler())
-                    .failureHandler(myAuthenticationFailureHandler())
-                    .permitAll()
+                //Перенарпавление на главную страницу после успешного входа
+                .successHandler(myAuthenticationSuccessHandler())
+                .failureHandler(myAuthenticationFailureHandler())
+                .permitAll()
                 .and()
-                    .logout()
-                    .permitAll()
-                    .logoutSuccessUrl("/");
+                .logout()
+                .permitAll()
+                .logoutSuccessUrl("/");
     }
 
 

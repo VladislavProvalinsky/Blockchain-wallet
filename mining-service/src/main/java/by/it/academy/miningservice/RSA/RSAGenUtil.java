@@ -1,11 +1,12 @@
 package by.it.academy.miningservice.RSA;
 
-
-
-import by.it.academy.miningservice.dto.Transaction;
+import by.it.academy.miningservice.entity.Block;
+import by.it.academy.miningservice.entity.Transaction;
 import by.it.academy.miningservice.handleException.TransactionHashException;
 import org.bitcoinj.core.Base58;
+import org.bouncycastle.util.encoders.Hex;
 
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -126,11 +127,49 @@ public class RSAGenUtil {
         return txId;
     }
 
-    public static boolean checkTransactionHash (Transaction transaction){
+    public static String hashBlockData(Block block) {
+        String blockDataToHash = block.getTransactions().toString() +
+                block.getPreviousHash() + block.getDate();
+        String blockDataHash = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(blockDataToHash.getBytes(StandardCharsets.UTF_8));
+            blockDataHash = new String(Hex.encode(hash));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return blockDataHash;
+    }
+
+
+    public static String hashWithNonce(String hashData, String nonce) {
+        String sumData = hashData + nonce;
+        String sumHash = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(sumData.getBytes(StandardCharsets.UTF_8));
+            sumHash = new String(Hex.encode(hash));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return sumHash;
+    }
+
+
+    public static boolean checkTransactionHash(Transaction transaction) {
         String txId = hashTransaction(transaction);
-        if (txId.equals(transaction.getId())){
+        if (txId.equals(transaction.getId())) {
             return true;
-        } else throw new TransactionHashException("Hashes are different! Transaction was modified!!!");
+        } else
+            throw new TransactionHashException("Hashes are different! Transaction with id = " + transaction.getId() + " was modified!!!");
+    }
+
+    public static boolean checkBlockHash(Block block) {
+        String sourceHash = RSAGenUtil.hashWithNonce(RSAGenUtil.hashBlockData(block), block.getNonce());
+        if (sourceHash.equals(block.getHash())) {
+            return true;
+        } else
+            throw new TransactionHashException("Hashes are different! Block with id = " + block.getId() + " was modified!!!");
     }
 
 }

@@ -1,14 +1,20 @@
 package by.it.academy.miningservice.generator;
 
-import by.it.academy.miningservice.dto.Block;
+import by.it.academy.miningservice.RSA.RSAGenUtil;
+import by.it.academy.miningservice.entity.Block;
+
+import java.util.UUID;
 
 public class BlockHashGenerator {
 
-    public static  String generateNewHashForNewBlock(Block block) {
+    public static String generateNonceForNewBlock(Block block) {
         String resultHash = "";
-        while (resultHash.startsWith("00000")){
-//            resultHash =
+        String nonce = "";
+        String hashData = RSAGenUtil.hashBlockData(block);
+        while (!resultHash.startsWith("00000")){
+            nonce = UUID.randomUUID().toString();
+            resultHash = RSAGenUtil.hashWithNonce(hashData, nonce);
         }
-        return resultHash;
+        return nonce;
     }
 }

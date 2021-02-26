@@ -7,7 +7,6 @@ import by.it.academy.blockchain.entity.Input;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.entity.Wallet;
 import by.it.academy.blockchain.repository.WalletRepository;
-import org.bouncycastle.jcajce.provider.asymmetric.RSA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +35,7 @@ public class WalletService {
     @Autowired
     FileWriterUtil fileWriterUtil;
 
-    @Transactional
+
     public Wallet getOneByUserId(Long id) {
         Wallet wallet = null;
         try {
@@ -49,7 +48,6 @@ public class WalletService {
         return wallet;
     }
 
-    @Transactional
     public Wallet getOne(String walletId) {
         Wallet wallet = null;
         try {

@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.entity;
+package by.it.academy.miningservice.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +33,6 @@ public class Block implements Serializable {
     private String previousHash; // хеш предыдущего блока (суммируется с данными)
 
     @Column(name = "date_of_creation", nullable = false)
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date; // дата создания блока
 
     @ToString.Exclude
