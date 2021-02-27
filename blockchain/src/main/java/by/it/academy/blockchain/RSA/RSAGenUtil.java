@@ -3,13 +3,16 @@ package by.it.academy.blockchain.RSA;
 
 import by.it.academy.blockchain.entity.Transaction;
 import by.it.academy.blockchain.handleException.TransactionHashException;
+import lombok.extern.java.Log;
 import org.bitcoinj.core.Base58;
 
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.time.format.DateTimeFormatter;
 
+@Log
 public class RSAGenUtil {
 
     public static KeyPair generateKeyPair() {
@@ -77,7 +80,8 @@ public class RSAGenUtil {
             KeyFactory kf = KeyFactory.getInstance("RSA");
             pvt = kf.generatePrivate(ks);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
+            log.warning("Signature has invalid format!");
+            return null;
         }
         return pvt;
     }
@@ -90,7 +94,8 @@ public class RSAGenUtil {
             sign.update(data.getBytes());
             signData = Base58.encode(sign.sign());
         } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
-            e.printStackTrace();
+            log.warning("Signature has invalid format!");
+            return null;
         }
         return signData;
     }
@@ -109,11 +114,11 @@ public class RSAGenUtil {
     }
 
     public static String hashTransaction(Transaction transaction) {
-        String txDataToHash = transaction.getSenderPublicKey() + "; "
-                + transaction.getReceiverPublicKey() + "; "
-                + transaction.getValue() + "; "
-                + transaction.getComission() + "; "
-                + transaction.getDate();
+        String txDataToHash = transaction.getSenderPublicKey() +
+                transaction.getReceiverPublicKey() +
+                transaction.getValue() +
+                transaction.getComission() +
+                transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         String txId = null;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

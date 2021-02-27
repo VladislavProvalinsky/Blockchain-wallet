@@ -39,8 +39,7 @@ public class Transaction implements Serializable {
     @Column (name = "comission", nullable = false, precision = 19, scale = 4)
     private BigDecimal comission; // комиссия для майнера (влияет на скорость подтверждения транзакции)
 
-    @Column(name = "date_of_creation", nullable = false)
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "date_of_creation", nullable = false, columnDefinition="TIMESTAMP")
     private LocalDateTime date; // дата создания транзакции
 
     @Column (name = "status", nullable = false)

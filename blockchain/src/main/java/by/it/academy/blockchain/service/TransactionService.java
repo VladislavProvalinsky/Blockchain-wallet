@@ -29,7 +29,7 @@ public class TransactionService {
         transaction.setId(hashTransaction);
         // подписываем трназакцию и сетим цифр подпись
         String signature = RSAGenUtil.getSignature(RSAGenUtil.getPrivateFromString(privateKey), hashTransaction);
-        transaction.setSignature(signature);
+        transaction.setSignature(signature == null ? "Invalid signature" : signature);
         // сетим в кошелек готовую транзакцию
         wallet.getTransactions().add(transaction);
         // обновляем аутпут кошелька

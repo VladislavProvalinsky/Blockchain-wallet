@@ -32,8 +32,7 @@ public class Block implements Serializable {
     @Column (name = "previous_hash", nullable = false)
     private String previousHash; // хеш предыдущего блока (суммируется с данными)
 
-    @Column(name = "date_of_creation", nullable = false)
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "date_of_creation", nullable = false, columnDefinition="TIMESTAMP")
     private LocalDateTime date; // дата создания блока
 
     @ToString.Exclude

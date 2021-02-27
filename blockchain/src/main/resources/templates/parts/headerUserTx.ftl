@@ -1,4 +1,4 @@
-<#macro header-userTx>
+<#macro headerUserTx>
 <!DOCTYPE html>
 <html>
   <title>Transactions</title>

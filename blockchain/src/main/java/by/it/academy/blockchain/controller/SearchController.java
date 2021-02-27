@@ -47,7 +47,7 @@ public class SearchController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);
         modelAndView.addObject("transactionList", mockingTransactions);
-        modelAndView.setViewName("userTransactions");
+        modelAndView.setViewName("user/userTransactions");
         return modelAndView;
     }
 }

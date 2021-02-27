@@ -1,5 +1,5 @@
-<#import "/parts/header-txForm.ftl" as htx>
-<@htx.header-txForm/>
+<#import "/parts/headerTxForm.ftl" as htx>
+<@htx.headerTxForm/>
 
 <body class="w3-light-grey">
 
@@ -52,17 +52,23 @@
             <label for="sender"><i class="fa fa-address-book"></i> Sender Wallet ID</label>
             <input type="text" value=${wallet.id} id="sender" name="senderPublicKey" required>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <small class="form-text text-muted">${senderPublicKeyError}</small>
+            <#if senderPublicKeyError ??>
+                <small class="form-text text-muted">${senderPublicKeyError}</small>
+            </#if>
 
             <label for="receiver"><i class="fa fa-address-book-o"></i> Receiver Wallet ID</label>
             <input type="text" id="receiver" name="receiverPublicKey" placeholder="${wallet.id}" required>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <small class="form-text text-muted">${receiverPublicKeyError}</small>
+            <#if receiverPublicKeyError ??>
+                <small class="form-text text-muted">${receiverPublicKeyError}</small>
+            </#if>
 
             <label for="value"><i class="fa fa-bitcoin"></i> Value</label>
             <input type="text" id="value" name="value" placeholder="${actualBalance}" pattern="^[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?$" required>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <small class="form-text text-muted">${valueError}</small>
+            <#if valueError ??>
+                <small class="form-text text-muted">${valueError}</small>
+            </#if>
 
             <label for="myCheck"><i class="fa fa-thumbs-o-up"></i>
             Comission for miner: <input type="checkbox" id="myCheck" onclick="myFunction()"><small class="form-text text-muted">It will help to confirm your transaction faster</small></label>

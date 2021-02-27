@@ -11,6 +11,7 @@ import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.time.format.DateTimeFormatter;
 
 public class RSAGenUtil {
 
@@ -111,11 +112,11 @@ public class RSAGenUtil {
     }
 
     public static String hashTransaction(Transaction transaction) {
-        String txDataToHash = transaction.getSenderPublicKey() + "; "
-                + transaction.getReceiverPublicKey() + "; "
-                + transaction.getValue() + "; "
-                + transaction.getComission() + "; "
-                + transaction.getDate();
+        String txDataToHash = transaction.getSenderPublicKey() +
+                transaction.getReceiverPublicKey() +
+                transaction.getValue() +
+                transaction.getComission() +
+                transaction.getDate();
         String txId = null;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

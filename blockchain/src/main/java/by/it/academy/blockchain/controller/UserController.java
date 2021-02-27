@@ -42,7 +42,7 @@ public class UserController {
         modelAndView.addObject("actualBalance", actualBalance);
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);
-        modelAndView.setViewName("userHome");
+        modelAndView.setViewName("user/userHome");
         return modelAndView;
     }
 
@@ -54,7 +54,7 @@ public class UserController {
         modelAndView.addObject("actualBalance", actualBalance);
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);
-        modelAndView.setViewName("transactionForm");
+        modelAndView.setViewName("user/transactionForm");
         return modelAndView;
     }
 
@@ -97,7 +97,7 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);
         modelAndView.addObject("transactionList", mockingTransactions);
-        modelAndView.setViewName("userTransactions");
+        modelAndView.setViewName("user/userTransactions");
         return modelAndView;
     }
 

@@ -25,14 +25,12 @@ public class StopController {
 
     @GetMapping
     public ResponseEntity<String> generateStopProcess(@PathVariable String walletId) {
-
+        stopProcess(walletId);
         return new ResponseEntity<>("Stopped", HttpStatus.OK);
     }
 
     private void stopProcess (String walletId){
-        TXVerificationThread txVerificationThread = new TXVerificationThread(transactionService, walletId);
-        BlockGenThread blockGenThread = new BlockGenThread(blockService, transactionService, walletId);
-        ListOfActiveThreads.addElementsInProcess(txVerificationThread, blockGenThread);
+        ActiveThreadsContainer.stopProcess(walletId);
 
     }
 }

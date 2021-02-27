@@ -1,7 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<#import "/parts/header-userTx.ftl" as utx>
-<@utx.header-userTx/>
+<#import "/parts/headerUserTx.ftl" as utx>
+<@utx.headerUserTx/>
 
 <body class="w3-light-grey">
 
@@ -51,6 +49,7 @@
     <div class="w3-col w3-right" style="width:300px">
     <form class="example" action="/blockchain/users/${user.id}/search" style="margin:auto;max-width:300px">
         <input type="text" placeholder="Search.." name="searchParam" pattern="[\w\S]*" required>
+        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <button type="submit"><i class="fa fa-search"></i></button>
     </form>
 

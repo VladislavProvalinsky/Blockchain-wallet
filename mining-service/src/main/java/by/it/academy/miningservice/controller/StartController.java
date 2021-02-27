@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-
 @RestController
 @RequestMapping("/start/{walletId}")
 public class StartController {
@@ -28,15 +25,15 @@ public class StartController {
 
     @GetMapping
     public ResponseEntity<String> startProcess(@PathVariable String walletId) {
-
+        createProcess(walletId);
         return new ResponseEntity<>("Working...", HttpStatus.OK);
     }
 
     private void createProcess (String walletId){
         TXVerificationThread txVerificationThread = new TXVerificationThread(transactionService, walletId);
         BlockGenThread blockGenThread = new BlockGenThread(blockService, transactionService, walletId);
-        ListOfActiveThreads.addElementsInProcess(txVerificationThread, blockGenThread);
-
+        ActiveThreadsContainer.addElementsInProcess(txVerificationThread, blockGenThread);
+        ActiveThreadsContainer.startProcess(txVerificationThread, blockGenThread);
     }
 
 

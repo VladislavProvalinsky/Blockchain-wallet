@@ -1,4 +1,4 @@
-<#macro header-txForm>
+<#macro headerTxForm>
 <!DOCTYPE html>
 <html>
   <title>New Transaction</title>
