@@ -47,13 +47,20 @@ public class UserController {
     }
 
     @GetMapping("/transactionForm")
-    public ModelAndView getTransactionForm(@PathVariable("id") Long id, ModelAndView modelAndView) {
+    public ModelAndView getTransactionForm(@PathVariable("id") Long id,
+                                           @RequestParam (value = "receiverPublicKeyError", required = false) String receiverPublicKeyError,
+                                           @RequestParam (value = "senderPublicKeyError", required = false) String senderPublicKeyError,
+                                           @RequestParam (value = "valueError", required = false) String valueError,
+                                           ModelAndView modelAndView) {
         User user = userService.getOne(id);
         Wallet wallet = walletService.getOneByUserId(id);
         Double actualBalance = walletService.getActualBalance(wallet);
         modelAndView.addObject("actualBalance", actualBalance);
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);
+        modelAndView.addObject("receiverPublicKeyError", receiverPublicKeyError);
+        modelAndView.addObject("senderPublicKeyError", senderPublicKeyError);
+        modelAndView.addObject("valueError", valueError);
         modelAndView.setViewName("user/transactionForm");
         return modelAndView;
     }
@@ -69,15 +76,12 @@ public class UserController {
         Wallet wallet = walletService.getOneByUserId(id);
         if (walletService.getOne(transaction.getReceiverPublicKey()) == null) {
             log.info("Check 1 ------------------------");
-            modelAndView.addObject("receiverPublicKeyError", "No such receiver wallet in blockchain.");
             modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
         } else if (walletService.getOne(transaction.getSenderPublicKey()) == null) {
             log.info("Check 2 ------------------------");
-            modelAndView.addObject("senderPublicKeyError", "Your walletID, was incorrect.");
             modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
         } else if ((transaction.getValue().doubleValue() + transaction.getComission().doubleValue()) > walletService.getActualBalance(wallet)) {
             log.info("Check 3 ------------------------");
-            modelAndView.addObject("valueError", "Value of transaction more than your balance.");
             modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
         } else {
             log.info("------------------------");

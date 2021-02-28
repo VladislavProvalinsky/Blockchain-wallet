@@ -62,7 +62,8 @@ public class WalletService {
 
     @Transactional
     public void updateWallet(Wallet wallet) {
-        entityManager.merge(wallet);
+        walletRepository.save(wallet);
+//        entityManager.merge(wallet);
     }
 
     public Wallet registerNewWalletUtil(User user) {
@@ -77,8 +78,16 @@ public class WalletService {
     }
 
     public Double getActualBalance(Wallet wallet) {
-        double inputsSum = wallet.getInputs().stream().flatMapToDouble(e -> DoubleStream.of(e.getValue().doubleValue())).sum();
-        double outputsSum = wallet.getOutputs().stream().flatMapToDouble(e -> DoubleStream.of(e.getValue().doubleValue())).sum();
+        double inputsSum = wallet
+                .getInputs()
+                .stream()
+                .flatMapToDouble(e -> DoubleStream.of(e.getValue().doubleValue()))
+                .sum();
+        double outputsSum = wallet
+                .getOutputs()
+                .stream()
+                .flatMapToDouble(e -> DoubleStream.of(e.getValue().doubleValue()))
+                .sum();
         return inputsSum - outputsSum;
     }
 }

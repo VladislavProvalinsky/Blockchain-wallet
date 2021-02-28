@@ -116,7 +116,7 @@ public class RSAGenUtil {
                 transaction.getReceiverPublicKey() +
                 transaction.getValue() +
                 transaction.getComission() +
-                transaction.getDate();
+                transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
         String txId = null;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
@@ -130,7 +130,7 @@ public class RSAGenUtil {
 
     public static String hashBlockData(Block block) {
         String blockDataToHash = block.getTransactions().toString() +
-                block.getPreviousHash() + block.getDate();
+                block.getPreviousHash() + block.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));;
         String blockDataHash = null;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

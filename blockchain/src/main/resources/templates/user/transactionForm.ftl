@@ -52,21 +52,21 @@
             <label for="sender"><i class="fa fa-address-book"></i> Sender Wallet ID</label>
             <input type="text" value=${wallet.id} id="sender" name="senderPublicKey" required>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <#if senderPublicKeyError ??>
+            <#if senderPublicKeyError??>
                 <small class="form-text text-muted">${senderPublicKeyError}</small>
             </#if>
 
             <label for="receiver"><i class="fa fa-address-book-o"></i> Receiver Wallet ID</label>
             <input type="text" id="receiver" name="receiverPublicKey" placeholder="${wallet.id}" required>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <#if receiverPublicKeyError ??>
+            <#if receiverPublicKeyError??>
                 <small class="form-text text-muted">${receiverPublicKeyError}</small>
             </#if>
 
             <label for="value"><i class="fa fa-bitcoin"></i> Value</label>
             <input type="text" id="value" name="value" placeholder="${actualBalance}" pattern="^[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?$" required>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <#if valueError ??>
+            <#if valueError??>
                 <small class="form-text text-muted">${valueError}</small>
             </#if>
 

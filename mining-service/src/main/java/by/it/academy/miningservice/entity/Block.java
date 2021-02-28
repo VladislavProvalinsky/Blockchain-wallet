@@ -32,11 +32,11 @@ public class Block implements Serializable {
     @Column (name = "previous_hash", nullable = false)
     private String previousHash; // хеш предыдущего блока (суммируется с данными)
 
-    @Column(name = "date_of_creation", nullable = false, columnDefinition="TIMESTAMP")
+    @Column(name = "date_of_creation", nullable = false, columnDefinition="TIMESTAMP", updatable = false)
     private LocalDateTime date; // дата создания блока
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.REFRESH)
     @JoinColumn (name = "block_id")
     private List<Transaction> transactions = new ArrayList<>();
 

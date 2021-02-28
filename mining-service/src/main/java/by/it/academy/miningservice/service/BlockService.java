@@ -35,10 +35,15 @@ public class BlockService {
     @Autowired
     EntityManager entityManager;
 
-    public Block getLastBlockFromDB() throws NoResultException {
-        TypedQuery<Block> query = entityManager.createQuery("FROM Block B ORDER BY B.date DESC", Block.class);
-        query.setMaxResults(1);
-        return query.getSingleResult();
+    public Block getLastBlockFromDB() {
+        try {
+            TypedQuery<Block> query = entityManager.createQuery("FROM Block B ORDER BY B.date DESC", Block.class);
+            query.setMaxResults(1);
+            return query.getSingleResult();
+        } catch (NoResultException e){
+            log.info("No blocks in DB");
+            return null;
+        }
     }
 
     public Block packageTransactionsInBlock(Queue<Transaction> transactions) {
@@ -59,6 +64,12 @@ public class BlockService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void saveBlockInDB(Block block, String walletId) {
+        saveGonorarForMiner(block, walletId);
+        transferValuesToReceivers(block);
+        blockRepository.save(block);
+    }
+
+    private void saveGonorarForMiner(Block block, String walletId) {
         Optional<Wallet> wallet = walletRepository.findById(walletId);
         if (wallet.isPresent()) {
             Wallet userWallet = wallet.get();
@@ -67,10 +78,21 @@ public class BlockService {
                     .stream()
                     .flatMapToDouble(tx -> DoubleStream.of(tx.getComission().doubleValue()))
                     .sum();
-            userWallet.getInputs().add(new Input(BigDecimal.valueOf(sum)));
+            if (sum == 0) {
+                userWallet.getInputs().add(new Input(BigDecimal.valueOf(0.5)));
+            } else {
+                userWallet.getInputs().add(new Input(BigDecimal.valueOf(sum)));
+            }
             walletRepository.save(userWallet);
-            blockRepository.save(block);
         } else log.warning("No such wallet!");
+    }
+
+    private void transferValuesToReceivers(Block block) {
+        block.getTransactions().forEach(tx -> {
+            Wallet wallet = walletRepository.getOne(tx.getReceiverPublicKey());
+            wallet.getInputs().add(new Input(tx.getValue()));
+            walletRepository.save(wallet);
+        });
     }
 
 

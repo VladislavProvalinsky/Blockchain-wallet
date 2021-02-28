@@ -118,7 +118,7 @@ public class RSAGenUtil {
                 transaction.getReceiverPublicKey() +
                 transaction.getValue() +
                 transaction.getComission() +
-                transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+                transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
         String txId = null;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
