@@ -32,12 +32,14 @@
   </div>
   <div class="form-group">
     <label for="User-email"><i class="fa fa-envelope-open-o"></i> Email address</label>
+    <#if emailError ??>
+        <div class="alert alert-warning" role="alert">
+            ${emailError}
+        </div>
+    </#if>
     <input type="email" value="${user.username}" path="email" class="form-control" name = "username" id="User-email" aria-describedby="emailHelp" placeholder="Email address" pattern=".+@.+\..+" required>
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-    <#if emailError ??>
-        ${emailError}
-    </#if>
   </div>
   <div class="form-group">
      <label for="pwd"><i class="fa fa-lock"></i> Password:</label>
@@ -46,11 +48,13 @@
   </div>
   <div class="form-group">
      <label for="pwd"><i class="fa fa-key"></i> Confirm password:</label>
+     <#if passwordError ??>
+        <div class="alert alert-warning" role="alert">
+            ${passwordError}
+        </div>
+     </#if>
      <input type="password" path="password" class="form-control" id="pwd2" placeholder="Confirm your password" name="passwordConfirm" pattern="[\d*A-Za-z]*" required>
      <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-     <#if passwordError ??>
-        ${passwordError}
-     </#if>
   </div>
       <div class="form-group form-check">
         <label class="form-check-label">

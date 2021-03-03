@@ -71,8 +71,8 @@ public class ActiveThreadsContainer {
                     log.info("Cleaning " + blockThreads + " from container..." );
                     blockGenThreads.removeAll(blockThreads);
                 }
-                log.info("ContainerGC waiting 1 minute...");
-                Thread.sleep(60_000);
+                log.info("ContainerGC waiting 5 minutes...");
+                Thread.sleep(300_000);
             }
         }
     }

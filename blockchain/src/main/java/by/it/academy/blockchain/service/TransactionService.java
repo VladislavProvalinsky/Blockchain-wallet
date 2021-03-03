@@ -9,7 +9,10 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -37,5 +40,33 @@ public class TransactionService {
         wallet.getOutputs().add(new Output(transaction.getValue().add(transaction.getComission())));
         // апдейтим кошелек
         walletService.updateWallet(wallet);
+    }
+
+    public ModelAndView validateTransactionFormAndCreateIfGood (Transaction transaction, Long id, String privateKey, ModelAndView modelAndView) {
+        if (transaction.getComission() == null) transaction.setComission(BigDecimal.ZERO);
+        transaction.setValue(transaction.getValue().setScale(4, RoundingMode.CEILING));
+        transaction.setComission(transaction.getComission().setScale(4, RoundingMode.CEILING));
+        Wallet wallet = walletService.getOneByUserId(id);
+        if (walletService.getOne(transaction.getReceiverPublicKey()) == null) {
+            log.info("Check 1 ------------------------");
+            modelAndView.addObject("receiverPublicKeyError", "No receiver with this walletId!");
+            modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
+            return modelAndView;
+        } else if (walletService.getOne(transaction.getSenderPublicKey()) == null) {
+            log.info("Check 2 ------------------------");
+            modelAndView.addObject("senderPublicKeyError", "Incorrect sender walletId!");
+            modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
+            return modelAndView;
+        } else if ((transaction.getValue().doubleValue() + transaction.getComission().doubleValue()) > walletService.getActualBalance(wallet)) {
+            log.info("Check 3 ------------------------");
+            modelAndView.addObject("valueError", "Transaction value bigger than your balance!");
+            modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
+            return modelAndView;
+        } else {
+            log.info("------------------------");
+            putNewTransaction(wallet, transaction, privateKey);
+            modelAndView.setViewName("redirect:/users/" + id);
+            return modelAndView;
+        }
     }
 }

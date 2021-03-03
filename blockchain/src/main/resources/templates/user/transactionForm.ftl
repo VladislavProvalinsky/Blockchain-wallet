@@ -50,38 +50,48 @@
           <div class="col-50">
             <br>
             <label for="sender"><i class="fa fa-address-book"></i> Sender Wallet ID</label>
-            <input type="text" value=${wallet.id} id="sender" name="senderPublicKey" required>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <#if senderPublicKeyError??>
-                <small class="form-text text-muted">${senderPublicKeyError}</small>
+                <div class="alert alert-danger" role="alert">
+                    ${senderPublicKeyError}
+                </div>
             </#if>
+            <input type="text" value=${wallet.id} id="sender" name="senderPublicKey" required />
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+
 
             <label for="receiver"><i class="fa fa-address-book-o"></i> Receiver Wallet ID</label>
-            <input type="text" id="receiver" name="receiverPublicKey" placeholder="${wallet.id}" required>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <#if receiverPublicKeyError??>
-                <small class="form-text text-muted">${receiverPublicKeyError}</small>
+                <div class="alert alert-danger" role="alert">
+                    ${receiverPublicKeyError}
+                </div>
             </#if>
+            <input type="text" id="receiver" name="receiverPublicKey" placeholder="${wallet.id}" required />
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+
 
             <label for="value"><i class="fa fa-bitcoin"></i> Value</label>
-            <input type="text" id="value" name="value" placeholder="${actualBalance}" pattern="^[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?$" required>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <#if valueError??>
-                <small class="form-text text-muted">${valueError}</small>
+                <div class="alert alert-danger" role="alert">
+                    ${valueError}
+                </div>
             </#if>
+            <input type="text" id="value" name="value" placeholder="${actualBalance}" pattern="^[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?$" required />
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+
 
             <label for="myCheck"><i class="fa fa-thumbs-o-up"></i>
             Comission for miner: <input type="checkbox" id="myCheck" onclick="myFunction()"><small class="form-text text-muted">It will help to confirm your transaction faster</small></label>
-            <input type="hidden" id="comission" name="comission" placeholder="${actualBalance}" pattern="^[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?$">
+            <input type="hidden" id="comission" name="comission" placeholder="${actualBalance}" pattern="^[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?$" />
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 
+
             <label for="senderPK"><i class="fa fa-key"></i> Signature</label>
-            <input type="password" id="senderPK" name="privateKey" placeholder="Insert your private wallet key to sign transaction" required>
+            <input type="password" id="senderPK" name="privateKey" placeholder="Insert your private wallet key to sign transaction" required />
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
           </div>
         </div>
         <label>
-          <input type="checkbox" required> Agree with wallet policy <i class="fa fa-shield"></i>
+          <input type="checkbox" required /> Agree with wallet policy <i class="fa fa-shield"></i>
           <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         </label>
         <input type="submit" value="Create transaction" class="btn">

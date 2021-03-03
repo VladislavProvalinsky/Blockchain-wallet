@@ -130,7 +130,8 @@ public class RSAGenUtil {
 
     public static String hashBlockData(Block block) {
         String blockDataToHash = block.getTransactions().toString() +
-                block.getPreviousHash() + block.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));;
+                block.getPreviousHash() + block.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+        ;
         String blockDataHash = null;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -170,7 +171,7 @@ public class RSAGenUtil {
         if (sourceHash.equals(block.getHash())) {
             return true;
         } else
-            throw new TransactionHashException("Hashes are different! Block with id = " + block.getId() + " was modified!!!");
+            throw new TransactionHashException("Hashes are different! Block with id = " + block.getId() + " was modified!!!\n Force Stopping Server!");
     }
 
 }

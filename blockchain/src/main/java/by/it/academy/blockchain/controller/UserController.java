@@ -32,13 +32,11 @@ public class UserController {
     @Autowired
     TransactionService transactionService;
 
-
     @GetMapping
     public ModelAndView homeUser(@PathVariable("id") Long id, ModelAndView modelAndView) {
         User user = userService.getOne(id);
         Wallet wallet = walletService.getOneByUserId(id);
         Double actualBalance = walletService.getActualBalance(wallet);
-//        ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("actualBalance", actualBalance);
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);
@@ -48,9 +46,9 @@ public class UserController {
 
     @GetMapping("/transactionForm")
     public ModelAndView getTransactionForm(@PathVariable("id") Long id,
-                                           @RequestParam (value = "receiverPublicKeyError", required = false) String receiverPublicKeyError,
-                                           @RequestParam (value = "senderPublicKeyError", required = false) String senderPublicKeyError,
-                                           @RequestParam (value = "valueError", required = false) String valueError,
+                                           @RequestParam(name = "receiverPublicKeyError", required = false) String receiverPublicKeyError,
+                                           @RequestParam(name = "senderPublicKeyError", required = false) String senderPublicKeyError,
+                                           @RequestParam(name = "valueError", required = false) String valueError,
                                            ModelAndView modelAndView) {
         User user = userService.getOne(id);
         Wallet wallet = walletService.getOneByUserId(id);
@@ -70,25 +68,7 @@ public class UserController {
                                            @ModelAttribute("privateKey") String privateKey,
                                            @ModelAttribute("transaction") Transaction transaction,
                                            ModelAndView modelAndView) {
-        if (transaction.getComission() == null) transaction.setComission(BigDecimal.ZERO);
-        transaction.setValue(transaction.getValue().setScale(4, RoundingMode.CEILING));
-        transaction.setComission(transaction.getComission().setScale(4, RoundingMode.CEILING));
-        Wallet wallet = walletService.getOneByUserId(id);
-        if (walletService.getOne(transaction.getReceiverPublicKey()) == null) {
-            log.info("Check 1 ------------------------");
-            modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
-        } else if (walletService.getOne(transaction.getSenderPublicKey()) == null) {
-            log.info("Check 2 ------------------------");
-            modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
-        } else if ((transaction.getValue().doubleValue() + transaction.getComission().doubleValue()) > walletService.getActualBalance(wallet)) {
-            log.info("Check 3 ------------------------");
-            modelAndView.setViewName("redirect:/users/" + id + "/transactionForm");
-        } else {
-            log.info("------------------------");
-            transactionService.putNewTransaction(wallet, transaction, privateKey);
-            modelAndView.setViewName("redirect:/users/" + id);
-        }
-        return modelAndView;
+        return transactionService.validateTransactionFormAndCreateIfGood(transaction, id, privateKey, modelAndView);
     }
 
     @GetMapping("/transactions")
@@ -96,7 +76,6 @@ public class UserController {
         User user = userService.getOne(id);
         Wallet wallet = walletService.getOneByUserId(id);
         List<Transaction> transactions = wallet.getTransactions();
-        // :) эта фигня чисто для view, никаких подделок не беспокойтесь)))
         List<TransactionMock> mockingTransactions = TransactionMock.getMockingTransactions(transactions);
         modelAndView.addObject("user", user);
         modelAndView.addObject("wallet", wallet);

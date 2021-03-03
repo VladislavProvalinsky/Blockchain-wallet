@@ -44,13 +44,13 @@ public class RegistrationController {
         if (!user.getPassword().equals(confirmed)) {
             modelAndView.setViewName("registration");
             modelAndView.addObject(user);
-            modelAndView.addObject("passwordError", "Пароли не совпадают");
+            modelAndView.addObject("passwordError", "Passwords are different!");
             return modelAndView;
         }
         if (userRepository.findByUsername(user.getUsername()) != null) {
             modelAndView.setViewName("registration");
             modelAndView.addObject(user);
-            modelAndView.addObject("emailError", "Пользователь с таким email уже существует");
+            modelAndView.addObject("emailError", "User with this email is registered! Choose another email");
             return modelAndView;
         }
         userService.saveRegisteredUser(user);

@@ -70,10 +70,11 @@
           <th>Date of creation</th>
           <th>Current status</th>
         </tr>
-        <#list transactionList as transaction>
         <#assign count = 0>
+        <#list transactionList as transaction>
+        <#assign count = count + 1>
         <tr>
-          <td>${count + 1}</td>
+          <td>${count}</td>
           <td>${transaction.value} <i class="fa fa-btc"></i></td>
           <td>${transaction.comission} <i class="fa fa-btc"></i></td>
           <td>${transaction.date}</td>
