@@ -27,7 +27,11 @@
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="photo">
-            <img class="personPhoto" alt="user" src="https://w7.pngwing.com/pngs/86/421/png-transparent-computer-icons-user-profile-set-of-abstract-icon-miscellaneous-monochrome-computer-wallpaper-thumbnail.png">
+           <#if user.filename??>
+                <img class="personPhoto" alt="userLogo" src="/blockchain/static/img/${user.filename}">
+           <#else>
+                <img class="personPhoto" alt="userLogo" src="https://w7.pngwing.com/pngs/86/421/png-transparent-computer-icons-user-profile-set-of-abstract-icon-miscellaneous-monochrome-computer-wallpaper-thumbnail.png">
+           </#if>
         </div>
         <br>
         <div style="color: white; text-align: center;">
@@ -36,7 +40,7 @@
         <hr color="grey">
     <a href="/blockchain/users/${user.id}">Home</a>
     <a href="/blockchain/users/${user.id}/transactions">Transactions</a>
-    <a href="#">Block Tree</a>
+    <a href="/blockchain/users/${user.id}/blocks">Block Tree</a>
     <a href="http://localhost:8080/blockchain/logout">Logout</a>
   </div>
 

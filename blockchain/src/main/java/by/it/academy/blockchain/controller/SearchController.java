@@ -1,5 +1,6 @@
 package by.it.academy.blockchain.controller;
 
+import by.it.academy.blockchain.aspect.SecureAuthorization;
 import by.it.academy.blockchain.entity.Transaction;
 import by.it.academy.blockchain.entity.TransactionMock;
 import by.it.academy.blockchain.entity.User;
@@ -30,6 +31,7 @@ public class SearchController {
     WalletService walletService;
 
     @GetMapping("/search")
+    @SecureAuthorization
     public ModelAndView searchResult(@RequestParam("searchParam") String searchParam,
                                      @PathVariable("id") Long id,
                                      ModelAndView modelAndView) {

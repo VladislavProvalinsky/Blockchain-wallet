@@ -27,7 +27,11 @@
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="photo">
+            <#if user.filename??>
+            <img class="personPhoto" alt="userLogo" src="/blockchain/static/img/${user.filename}">
+            <#else>
             <img class="personPhoto" alt="userLogo" src="https://w7.pngwing.com/pngs/86/421/png-transparent-computer-icons-user-profile-set-of-abstract-icon-miscellaneous-monochrome-computer-wallpaper-thumbnail.png">
+            </#if>
         </div>
         <br>
         <div style="color: white; text-align: center;">
@@ -37,9 +41,21 @@
     <a href="/blockchain/users/${user.id}">Home</a>
     <a href="/blockchain/users/${user.id}/transactions">Transactions</a>
     <a href="/blockchain/users/${user.id}/transactionForm">Create Transaction</a>
-    <a href="#">Block Tree</a>
+    <a href="/blockchain/users/${user.id}/blocks">Block Tree</a>
+    <a onclick="document.getElementById('id01').style.display='block'"
+    onmouseover="this.style.color='#f1f1f1';" onmouseout="this.style.color='#818181';" style="cursor: pointer; color:#818181">Upload Image</a>
     <a href="http://localhost:8080/blockchain/logout">Logout</a>
-  </div>
+
+    <div id="id01" class="modal">
+        <form class="modal-content animate" method="post" action="/blockchain/users/${user.id}/upload" enctype="multipart/form-data">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <br><br>
+                <input style="margin:5px" type="file" name="file">
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button class="w3-button w3-teal" style="width:20%; margin:5px" type="submit">Add</button>
+        </form>
+    </div>
+</div>
 
 <div class="w3-row">
   <div class="w3-col s4">
@@ -49,10 +65,9 @@
             <h4><b>YOUR WALLET</b></h4>
             <hr>
             <h4><u><b>BALANCE:</b></u><cite> ${actualBalance} </cite><i class="fa fa-bitcoin"></i></h4></p>
-            <p class="text-sm-left">Your personal wallet! Make transactions, mine bitcoins, enjoy the life!</p>
+            <p class="text-sm-left">Your personal wallet!<br>Make transactions, mine bitcoins, enjoy the life!</p>
                 <div class="w3-col m8 s12">
-                    <p><button type="button" onclick="window.location.href='/blockchain/users/${user.id}/transactions'"
-                    class="w3-button w3-padding-large w3-white w3-border"><b>SEE TRANSACTIONS</b></button></p>
+                    <br>
                     <p><button class="btn w3-button w3-padding-large w3-white w3-border" data-clipboard-text="${wallet.id}"><b>COPY PUBLIC KEY</b></button></p>
                     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
                     <script src="/blockchain/static/js/copy.js"></script>
@@ -68,11 +83,15 @@
           <div class="w3-container w3-white">
             <br>
             <h4><b>TRANSACTION</b></h4>
-            <p class="text-sm-left">Generate new transactions, send money and support blockchain!</p>
+            <hr>
+            <p class="text-sm-left">Transaction is a transfer of Bitcoin value that is broadcast to the network and collected into blocks.
+            Generate new transactions, send money and support blockchain!</p>
                 <div class="w3-col m8 s12">
                     <!-- Button to open the modal -->
                     <p><button type="button" onclick="window.location='http://localhost:8080/blockchain/users/${user.id}/transactionForm';"
                     class="w3-button w3-padding-large w3-white w3-border" style="width:auto;"><b>CREATE TRANSACTION</b></button></p>
+                    <p><button type="button" onclick="window.location.href='/blockchain/users/${user.id}/transactions'"
+                    class="w3-button w3-padding-large w3-white w3-border"><b>SEE TRANSACTIONS</b></button></p>
                 </div>
           </div>
         </div>
@@ -85,32 +104,21 @@
           <div class="w3-container w3-white">
             <br>
             <h4><b>BLOCKS</b></h4>
-            <p class="text-sm-left">Look at the fully-system Blockchain tree!</p>
+            <hr>
+            <p class="text-sm-left">A full copy of a block chain contains every transaction ever executed.
+            Every block contains a hash of the previous block.
+            This has the effect of creating a chain of blocks from the genesis block to the current block.
+            With this information, you can find out how much value belonged to each address at any point in history.
+            Look at the fully-system Blockchain tree!</p>
                 <div class="w3-col m8 s12">
-                    <p><button type="button" onclick="window.location.href='https://github.com/VladislavProvalinsky/Blockchain-wallet';"
+                    <p><button type="button" onclick="window.location.href='/blockchain/users/${user.id}/blocks';"
                     class="w3-button w3-padding-large w3-white w3-border"><b>SEE BLOCK TREE</b></button></p>
                 </div>
           </div>
         </div>
   </div>
 
-<div class="w3-row">
- <hr>
- <div class="w3-col l8 s12">
-  <div class="w3-card-4 w3-margin w3-white">
-  <img src="https://www.marydaytrader.com/wp-content/uploads/2018/09/swingtrading3.jpg" alt="Rates" width="100%" height="200">
-    <div class="w3-container">
-      <br>
-      <h3><b>CRYPTOCURRENCY EXCHANGE RATES: live</b></h3>
-    </div>
 
-    <div id="coinmarketcap-widget-coin-price-block" coins="1,1027,825,52,6636,2010,1975" currency="USD" theme="light"
-    transparent="true" show-symbol-logo="true">
-    </div>
-    <br>
-  </div>
-</div>
-</div>
 
 </div>
 

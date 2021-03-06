@@ -8,9 +8,15 @@ import by.it.academy.blockchain.repository.UserRepository;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @Log
@@ -28,6 +34,9 @@ public class UserService {
     @Autowired
     WalletService walletService;
 
+    @Value("${upload.path}")
+    private String uploadPath;
+
 
     public User findByUsername (String username){
        return userRepository.findByUsername(username);
@@ -39,17 +48,32 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.getRoles().add(new Role(1L, "ROLE_USER"));
             user.getWallets().add(walletService.registerNewWalletUtil(user));
+            user.setActive(false);
             userRepository.save(user);
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.getRoles().add(roleRepository.findById(1L).get());
             user.getWallets().add(walletService.registerNewWalletUtil(user));
+            user.setActive(false);
             userRepository.save(user);
         }
     }
 
     @JsonView(UserView.RequiredFieldView.class)
     public User getOne(Long id) {
-        return userRepository.findById(id).orElseThrow(); // убрать однозданчно!
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public void uploadFile(Long id, MultipartFile file) throws IOException {
+        User user = getOne(id);
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+        String uuidFile = UUID.randomUUID().toString();
+        String resultFilename = uuidFile + "." + file.getOriginalFilename();
+        file.transferTo(new File(uploadPath + "/" + resultFilename));
+        user.setFilename(resultFilename);
+        userRepository.save(user);
     }
 }

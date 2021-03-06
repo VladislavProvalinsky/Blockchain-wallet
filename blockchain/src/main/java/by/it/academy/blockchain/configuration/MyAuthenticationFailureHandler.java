@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @Getter
 @Setter
-public class MySimpleAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class MyAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 

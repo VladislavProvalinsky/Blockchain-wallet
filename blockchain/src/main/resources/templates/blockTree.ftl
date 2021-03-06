@@ -1,5 +1,5 @@
-<#import "/parts/headerUserTx.ftl" as utx>
-<@utx.headerUserTx/>
+<#import "/parts/headerUser.ftl" as hu>
+<@hu.headerUser/>
 
 <body class="w3-light-grey">
 
@@ -39,58 +39,13 @@
         </div>
         <hr color="grey">
     <a href="/blockchain/users/${user.id}">Home</a>
+    <a href="/blockchain/users/${user.id}/transactions">Transactions</a>
     <a href="/blockchain/users/${user.id}/transactionForm">Create Transaction</a>
-    <a href="/blockchain/users/${user.id}/blocks">Block Tree</a>
     <a href="http://localhost:8080/blockchain/logout">Logout</a>
   </div>
 
 
 
-<div class="w3-row">
-    <div class="w3-rest w3-container">
-        <h2>Your Transactions Info</h2>
-        <button type="button" class="btn btn-success" onclick="window.location.href='/blockchain/users/${user.id}/transactions'"><i class="fa fa-refresh"></i> Refresh</button>
-    <div class="w3-col w3-right" style="width:300px">
-    <form class="example" action="/blockchain/users/${user.id}/search" style="margin:auto;max-width:300px">
-        <input type="text" placeholder="Search.." name="searchParam" pattern="[\w\S]*" required>
-        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
-
-
-    </div>
-   </div>
-</div>
-
-<div class="w3-row">
-<div class="w3-col-50">
-    <div class="w3-container">
-      <div style="overflow-x:auto;">
-      <table class="w3-table-all w3-hoverable">
-        <tr>
-          <th>&#8470;</th>
-          <th>Value</th>
-          <th>Comission</th>
-          <th>Date of creation</th>
-          <th>Current status</th>
-        </tr>
-        <#assign count = 0>
-        <#list transactionList as transaction>
-        <#assign count = count + 1>
-        <tr>
-          <td>${count}</td>
-          <td>${transaction.value} <i class="fa fa-btc"></i></td>
-          <td>${transaction.comission} <i class="fa fa-btc"></i></td>
-          <td>${transaction.date}</td>
-          <td>${transaction.status}</td>
-        </tr>
-        <#else> No Transactions
-        </#list>
-      </table>
-      </div>
-    </div>
-</div>
-</div>
 
 
 </body>

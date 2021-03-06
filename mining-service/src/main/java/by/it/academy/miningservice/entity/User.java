@@ -24,6 +24,9 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // id клиента в системе
 
+    @Column (name = "active", nullable = false)
+    private boolean isActive;
+
     @Column (name = "name", nullable = false)
     private String name; // имя клиента
 
@@ -38,6 +41,9 @@ public class User implements Serializable {
 
     @Column (name = "mobile")
     private String mobile; // моб телефон
+
+    @Column (name = "filename")
+    private String filename;
 
     @ToString.Exclude
     @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)

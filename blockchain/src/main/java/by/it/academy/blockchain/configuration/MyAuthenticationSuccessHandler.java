@@ -22,7 +22,7 @@ import java.io.IOException;
 
 @Getter
 @Setter
-public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
     UserRepository userRepository;
@@ -62,6 +62,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User tempUser = userRepository.findByUsername(userDetails.getUsername());
+        setActiveStatusToTrue(tempUser);
 
         for (GrantedAuthority grantedAuthority : userDetails.getAuthorities()) {
             if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
@@ -88,5 +89,10 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
             return;
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+    }
+
+    private void setActiveStatusToTrue (User user) {
+        user.setActive(true);
+        userRepository.save(user);
     }
 }

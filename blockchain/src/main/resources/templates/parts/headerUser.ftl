@@ -14,7 +14,9 @@
 
     <link rel="stylesheet" href="/blockchain/static/css/userCurtainMenu.css">
     <link rel="stylesheet" href="/blockchain/static/css/personPhoto.css">
+    <link rel="stylesheet" href="/blockchain/static/css/imageUploadForm.css">
     <script src="/blockchain/static/js/userCurtainMenu.js"></script>
+    <script src="/blockchain/static/js/imageUploadForm.js"></script>
 
 </head>
 </#macro>
