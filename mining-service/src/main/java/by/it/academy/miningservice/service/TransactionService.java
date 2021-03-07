@@ -46,7 +46,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public List<Transaction> getNeededNumberOfNotConfirmedTransactions(TransactionStatus status, int number) {
+    public List<Transaction> getNeededNumberOfVerifiedTransactionsWithoutComission(TransactionStatus status, int number) {
         Query query = entityManager.createQuery("From Transaction where status=:status", Transaction.class);
         query.setParameter("status", status);
         query.setMaxResults(number);
@@ -57,8 +57,8 @@ public class TransactionService {
     }
 
     @Transactional
-    public List<Transaction> findFirst5ByStatusAndComissionGreaterThan(TransactionStatus status, BigDecimal comission) {
-        List<Transaction> transactions = transactionRepository.findFirst5ByStatusAndComissionGreaterThan(status, comission);
+    public List<Transaction> findFirst5ByStatusAndComissionGreaterThanOrderByComissionDesc(TransactionStatus status, BigDecimal comission) {
+        List<Transaction> transactions = transactionRepository.findFirst5ByStatusAndComissionGreaterThanOrderByComissionDesc(status, comission);
         transactions.forEach(e -> e.setStatus(TransactionStatus.IN_BLOCK));
         transactionRepository.saveAll(transactions);
         return transactions;

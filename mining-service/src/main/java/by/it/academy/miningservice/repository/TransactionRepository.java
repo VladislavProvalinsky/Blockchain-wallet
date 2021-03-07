@@ -13,5 +13,5 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, String> {
 
     List<Transaction> findFirst5ByStatus(TransactionStatus status);
-    List<Transaction> findFirst5ByStatusAndComissionGreaterThan(TransactionStatus status, BigDecimal comission);
+    List<Transaction> findFirst5ByStatusAndComissionGreaterThanOrderByComissionDesc(TransactionStatus status, BigDecimal comission);
 }

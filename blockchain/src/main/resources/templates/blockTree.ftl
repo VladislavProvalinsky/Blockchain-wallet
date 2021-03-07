@@ -98,17 +98,63 @@
   <!--/.Indicators-->
 
   <div class="carousel-inner" role="listbox">
+    <#if blockTree?has_content && (blockTree?size > 3) >
+      <#list blockTree as block>
+        <#if block.id <= 3>
+        <div class="carousel-item active">
+          <div class="col-12 col-md-4">
+            <div class="card mb-2">
+              <#if block.id == 1>
+              <img class="card-img-top" src="https://i.ytimg.com/vi/WAIOcPA0EBk/maxresdefault.jpg"
+                alt="Card image cap">
+              <#else>
+              <img class="card-img-top" src="https://www.tbstat.com/wp/uploads/2018/09/20200325_OG-The-Block-Home.jpg"
+                alt="Card image cap">
+              </#if>
+              <div class="card-body">
+                <h4 class="card-title font-weight-bold">Block N ${block.id}</h4>
+                <p class="card-text">Hash: ${block.hash}<br>
+                Nonce: ${block.nonce}<br>
+                PreviousHash: ${block.previousHash}<br>
+                <#setting date_format="dd-MM-yyyy HH:mm:ss">
+                <#assign createdOn='${block.date}'>
+                Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?date}<br></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <#else>
+        <div class="carousel-item">
+          <div class="col-12 col-md-4">
+            <div class="card mb-2">
+              <img class="card-img-top" src="https://www.tbstat.com/wp/uploads/2018/09/20200325_OG-The-Block-Home.jpg"
+                alt="Card image cap">
+              <div class="card-body">
+                <h4 class="card-title font-weight-bold">Block N ${block.id}</h4>
+                <p class="card-text">Hash: ${block.hash}<br>
+                Nonce: ${block.nonce}<br>
+                PreviousHash: ${block.previousHash}<br>
+                <#setting date_format="dd-MM-yyyy HH:mm:ss">
+                <#assign createdOn='${block.date}'>
+                Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?date}<br></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </#if>
+        </#list>
 
+    <#else>
     <div class="carousel-item active">
-      <#if blockTree?has_content>
+      <#if blockTree?has_content && (blockTree?size <=3) >
       <#list blockTree as block>
       <div class="col-12 col-md-4">
         <div class="card mb-2">
           <#if block.id == 1>
-          <img class="card-img-top" src="https://prostocoin.io/storage/photos/shares/genesis-block-btc.jpg"
+          <img class="card-img-top" src="https://i.ytimg.com/vi/WAIOcPA0EBk/maxresdefault.jpg"
             alt="Card image cap">
           <#else>
-          <img class="card-img-top" src="https://getlogovector.com/wp-content/uploads/2019/10/the-block-crypto-simplified-logo-vector.png"
+          <img class="card-img-top" src="https://www.tbstat.com/wp/uploads/2018/09/20200325_OG-The-Block-Home.jpg"
             alt="Card image cap">
           </#if>
           <div class="card-body">
@@ -116,7 +162,9 @@
             <p class="card-text">Hash: ${block.hash}<br>
             Nonce: ${block.nonce}<br>
             PreviousHash: ${block.previousHash}<br>
-            Date of creation: ${block.date}<br></p>
+            <#setting date_format="dd-MM-yyyy HH:mm:ss">
+            <#assign createdOn='${block.date}'>
+            Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?date}<br></p>
           </div>
         </div>
       </div>
@@ -133,14 +181,13 @@
         </div>
       </div>
       </#if>
+    </div>
+    </#if>
+
+
   </div>
-
 </div>
 </div>
-
-
-
-
 
 </body>
 </html>

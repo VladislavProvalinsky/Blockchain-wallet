@@ -16,10 +16,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 @Log
@@ -40,7 +38,7 @@ public class BlockService {
             TypedQuery<Block> query = entityManager.createQuery("FROM Block B ORDER BY B.date DESC", Block.class);
             query.setMaxResults(1);
             return query.getSingleResult();
-        } catch (NoResultException e){
+        } catch (NoResultException e) {
             log.info("No blocks in DB");
             return null;
         }
@@ -48,9 +46,12 @@ public class BlockService {
 
     public Block packageTransactionsInBlock(Queue<Transaction> transactions) {
         List<Transaction> transactionList = new ArrayList<>(transactions);
+        List<Transaction> sortedTransactions = transactionList.stream()
+                .sorted((t1, t2) -> t2.getComission().compareTo(t1.getComission()))
+                .collect(Collectors.toList());
         Block lastBlockFromDB = getLastBlockFromDB();
         Block block = new Block();
-        block.setTransactions(transactionList);
+        block.setTransactions(sortedTransactions);
         block.setDate(LocalDateTime.now());
         if (lastBlockFromDB == null) {
             block.setPreviousHash("Genesis-Block");
@@ -95,5 +96,7 @@ public class BlockService {
         });
     }
 
-
+    public List<Block> getAllBlocks() {
+        return blockRepository.findAll();
+    }
 }

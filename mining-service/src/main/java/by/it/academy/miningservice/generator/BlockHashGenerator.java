@@ -11,7 +11,7 @@ public class BlockHashGenerator {
         String resultHash = "";
         String nonce = "";
         String hashData = RSAGenUtil.hashBlockData(block);
-        while (!resultHash.startsWith("00000")){
+        while (!resultHash.startsWith("00000")) {
             nonce = UUID.randomUUID().toString();
             resultHash = RSAGenUtil.hashWithNonce(hashData, nonce);
         }

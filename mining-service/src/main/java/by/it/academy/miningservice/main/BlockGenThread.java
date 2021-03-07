@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.CannotAcquireLockException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -37,7 +36,7 @@ public class BlockGenThread extends Thread {
         ArrayBlockingQueue<Transaction> queue = new ArrayBlockingQueue<>(5, true);
         while (!this.isInterrupted()) {
             try {
-                queue.addAll(transactionService.findFirst5ByStatusAndComissionGreaterThan(TransactionStatus.VERIFIED, BigDecimal.ZERO));
+                queue.addAll(transactionService.findFirst5ByStatusAndComissionGreaterThanOrderByComissionDesc(TransactionStatus.VERIFIED, BigDecimal.ZERO));
             } catch (NullPointerException e) {
                 log.info("No transactions with comission...");
             }
@@ -47,7 +46,7 @@ public class BlockGenThread extends Thread {
             } else {
                 try {
                     List<Transaction> transactions =
-                            transactionService.getNeededNumberOfNotConfirmedTransactions(TransactionStatus.VERIFIED, 5 - queue
+                            transactionService.getNeededNumberOfVerifiedTransactionsWithoutComission(TransactionStatus.VERIFIED, 5 - queue
                                     .size());
                     transactions.forEach(queue::offer);
                 } catch (NullPointerException e) {

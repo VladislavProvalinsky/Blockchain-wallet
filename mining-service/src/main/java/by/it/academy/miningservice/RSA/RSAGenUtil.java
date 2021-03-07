@@ -12,6 +12,10 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RSAGenUtil {
 
@@ -131,7 +135,6 @@ public class RSAGenUtil {
     public static String hashBlockData(Block block) {
         String blockDataToHash = block.getTransactions().toString() +
                 block.getPreviousHash() + block.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
-        ;
         String blockDataHash = null;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -167,11 +170,12 @@ public class RSAGenUtil {
     }
 
     public static boolean checkBlockHash(Block block) {
+        block.setTransactions(block.getTransactions().stream().sorted((t1, t2)-> t2.getComission().compareTo(t1.getComission())).collect(Collectors.toList()));
         String sourceHash = RSAGenUtil.hashWithNonce(RSAGenUtil.hashBlockData(block), block.getNonce());
         if (sourceHash.equals(block.getHash())) {
             return true;
         } else
-            throw new TransactionHashException("Hashes are different! Block with id = " + block.getId() + " was modified!!!\n Force Stopping Server!");
+            throw new TransactionHashException("Hashes are different! Block with id = " + block.getId() + " was modified!!!\nForce Stopping Server!");
     }
 
 }

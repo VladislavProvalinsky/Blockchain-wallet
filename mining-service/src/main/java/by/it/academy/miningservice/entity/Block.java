@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,6 +38,7 @@ public class Block implements Serializable {
     private LocalDateTime date; // дата создания блока
 
     @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.REFRESH)
     @JoinColumn (name = "block_id")
     private List<Transaction> transactions = new ArrayList<>();

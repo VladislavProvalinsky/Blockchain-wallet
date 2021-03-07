@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Transaction implements Serializable {
     private static final long serialVersionUID = 5040651852162921242L;
 
