@@ -4,7 +4,6 @@ import by.it.academy.blockchain.entity.Transaction;
 import org.bitcoinj.core.Base58;
 import org.bouncycastle.crypto.digests.SHA512Digest;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -18,7 +17,7 @@ import java.security.interfaces.ECPublicKey;
 import java.security.spec.*;
 import java.util.Base64;
 
-@Component
+
 public class BCKeysFactoryUtil {
 
     public KeyPair generateKeyPair() {

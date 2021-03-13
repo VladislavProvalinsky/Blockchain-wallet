@@ -10,7 +10,7 @@ import java.nio.file.*;
 @Component
 public class FileWriterUtil {
 
-    public final String warning = "!!!!!!!ЭТО ВАШ ПРИВАТНЫЙ КЛЮЧ!!!!!!! \n !!!!!!!НИКОМУ ЕГО НЕ ДАВАЙТЕ И НЕ ТЕРЯЙТЕ, ИНАЧЕ ПОТЕРЯЕТЕ ВСЕ ДЕНЬГИ!!!!!!! \n";
+    public final String warning = "!!!!!!!THIS IS YOUR PRIVATE KEY!!!!!!! \n !!!!!!!DON'T MISS IT!!!!!!! \n";
 
     public void writeKeyToFile(String userEmail, String key) {
         Path targetPath = Paths.get("C:\\Users\\Vladislav\\Desktop\\");

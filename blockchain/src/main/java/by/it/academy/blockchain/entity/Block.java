@@ -24,16 +24,16 @@ public class Block implements Serializable {
     private Long id;
 
     @Column (name = "hash")
-    private String hash; // хеш блока (который майнится по алгоритму: hash всех конфирмд транзакций + previous hash блока = 0x5...хеш)
+    private String hash;
 
     @Column (name = "nonce")
     private String nonce;
 
     @Column (name = "previous_hash", nullable = false)
-    private String previousHash; // хеш предыдущего блока (суммируется с данными)
+    private String previousHash;
 
     @Column(name = "date_of_creation", nullable = false, columnDefinition="TIMESTAMP", updatable = false)
-    private LocalDateTime date; // дата создания блока
+    private LocalDateTime date;
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL)

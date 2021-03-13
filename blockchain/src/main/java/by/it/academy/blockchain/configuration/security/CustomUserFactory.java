@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.configuration.jwt;
+package by.it.academy.blockchain.configuration.security;
 
 import by.it.academy.blockchain.entity.Role;
 import by.it.academy.blockchain.entity.User;
@@ -9,10 +9,10 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class JwtUserFactory {
+public final class CustomUserFactory {
 
-    public static JwtUser fromUserToJwtUser(User user) {
-        return new JwtUser(
+    public static CustomUserImpl fromUserToCustomUser(User user) {
+        return new CustomUserImpl(
                 user.getUsername(),
                 user.getPassword(),
                 mapRolesToAuthority(user.getRoles()));

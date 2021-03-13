@@ -1,8 +1,10 @@
 package by.it.academy.blockchain.entity;
 
 
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -20,7 +22,11 @@ public class Wallet implements Serializable {
     private static final long serialVersionUID = -3365706083289255873L;
 
     @Id
-    private String id; // публичный ключ и ID кошелька
+    private String id;
+
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "wallet")
+    private User user;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
@@ -37,7 +43,7 @@ public class Wallet implements Serializable {
     @ToString.Exclude
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn (name = "wallet_id")
-    private List<Transaction> transactions = new ArrayList<>(); // список транзакций в кошельке
+    private List<Transaction> transactions = new ArrayList<>();
 
     public Wallet(String id) {
         this.id = id;

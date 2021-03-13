@@ -1,9 +1,6 @@
 package by.it.academy.blockchain.entity;
 
-import by.it.academy.blockchain.domain.UserView;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table (name = "users")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,31 +21,31 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // id клиента в системе
+    private Long id;
 
-    @Column (name = "active", nullable = false)
+    @Column(name = "active", nullable = false)
     private boolean isActive;
 
-    @Column (name = "name", nullable = false)
-    private String name; // имя клиента
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column (name = "surname", nullable = false)
-    private String surname; // фамилия клиента
+    @Column(name = "surname", nullable = false)
+    private String surname;
 
-    @Column (name = "password", nullable = false)
-    private String password; // пароль для входа в систему {bcrypt}
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @Column (name = "email", nullable = false)
-    private String username; // login для входа в систему
+    @Column(name = "email", nullable = false)
+    private String username;
 
-    @Column (name = "mobile")
-    private String mobile; // моб телефон
+    @Column(name = "mobile")
+    private String mobile;
 
-    @Column (name = "filename")
+    @Column(name = "filename")
     private String filename;
 
     @ToString.Exclude
-    @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -56,9 +53,9 @@ public class User implements Serializable {
 
 
     @ToString.Exclude
-    @OneToMany (cascade = CascadeType.ALL)
-    @JoinColumn (name = "user_id")
-    private List<Wallet> wallets = new ArrayList<>(); // кошелек клиента
+    @OneToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "wallet_id")
+    private Wallet wallet;
 
     public User(String name, String surname, String username, String mobile) {
         this.name = name;

@@ -1,8 +1,7 @@
-package by.it.academy.blockchain.configuration;
+package by.it.academy.blockchain.configuration.security;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;

@@ -39,6 +39,7 @@
         </div>
         <hr color="grey">
     <a href="/blockchain/users/${user.id}">Home</a>
+    <a href="/blockchain/users/${user.id}/wallets">Wallets</a>
     <a href="/blockchain/users/${user.id}/transactions">Transactions</a>
     <a href="/blockchain/users/${user.id}/blocks">Block Tree</a>
     <a href="http://localhost:8080/blockchain/logout">Logout</a>

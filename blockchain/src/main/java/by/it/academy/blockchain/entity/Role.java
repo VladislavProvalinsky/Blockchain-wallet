@@ -19,7 +19,7 @@ public class Role implements Serializable {
     private Long id;
 
     @Column (name = "name")
-    private String name; // Имя роли должно соответствовать шаблону: «ROLE_ИМЯ»
+    private String name;
 
     @ToString.Exclude
     @Transient

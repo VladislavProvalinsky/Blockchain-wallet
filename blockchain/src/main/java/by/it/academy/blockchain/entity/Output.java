@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class Output {
 
     @Id
-    @GeneratedValue(generator = "system-uuid") // генератор UUID
+    @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String id;
 

@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.11.0/css/all.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.8.1/css/mdb.min.css">
     <link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.8.1/js/mdb.min.js"></script>
     <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script>
+    <!-- MDB -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" />
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"></script>
 
 
     <link rel="stylesheet" href="/blockchain/static/css/userCurtainMenu.css">
@@ -26,7 +28,6 @@
     <link rel="stylesheet" href="/blockchain/static/css/imageUploadForm.css">
     <script src="/blockchain/static/js/userCurtainMenu.js"></script>
     <script src="/blockchain/static/js/imageUploadForm.js"></script>
-    <script src="/blockchain/static/js/blockCarousel.js"></script>
 
 
 </head>
@@ -69,86 +70,115 @@
         </div>
         <hr color="grey">
     <a href="/blockchain/users/${user.id}">Home</a>
+    <a href="/blockchain/users/${user.id}/wallets">Wallets</a>
     <a href="/blockchain/users/${user.id}/transactions">Transactions</a>
     <a href="/blockchain/users/${user.id}/transactionForm">Create Transaction</a>
     <a href="http://localhost:8080/blockchain/logout">Logout</a>
   </div>
 
-<div id="carousel-example-multi" class="carousel slide carousel-multi-item v-2" data-ride="carousel">
+<!-- Carousel wrapper -->
+<div id="carouselMultiItemExample" class="carousel slide" data-ride="carousel">
 
-  <!--Controls-->
-  <div class="controls-top">
-    <a class="btn-floating" href="#carousel-example-multi" data-slide="prev"><i
-        class="fas fa-chevron-left"></i></a>
-    <a class="btn-floating" href="#carousel-example-multi" data-slide="next"><i
-        class="fas fa-chevron-right"></i></a>
+  <!-- Controls -->
+  <div class="d-flex justify-content-center mb-4">
+    <button style="color:black" class="carousel-control-prev position-relative" type="button" data-target="#carouselMultiItemExample" data-slide="prev" >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button style="color:black" class="carousel-control-next position-relative" type="button" data-target="#carouselMultiItemExample" data-slide="next" >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
   <!--/.Controls-->
 
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-  <#if blockTree?has_content>
-  <#list blockTree as block>
-    <li data-target="#carousel-example-multi" data-slide-to="${block.id}" class="active"></li>
-  </#list>
-  <#else>
-    <li data-target="#carousel-example-multi" data-slide-to="0" class="active"></li>
-  </#if>
-  </ol>
-  <!--/.Indicators-->
-
-  <div class="carousel-inner" role="listbox">
+  <div class="carousel-inner">
     <#if blockTree?has_content && (blockTree?size > 3) >
-      <#list blockTree as block>
-        <#if block.id <= 3>
         <div class="carousel-item active">
-          <div class="col-12 col-md-4">
-            <div class="card mb-2">
-              <#if block.id == 1>
-              <img class="card-img-top" src="https://i.ytimg.com/vi/WAIOcPA0EBk/maxresdefault.jpg"
-                alt="Card image cap">
-              <#else>
-              <img class="card-img-top" src="https://www.tbstat.com/wp/uploads/2018/09/20200325_OG-The-Block-Home.jpg"
-                alt="Card image cap">
-              </#if>
-              <div class="card-body">
-                <h4 class="card-title font-weight-bold">Block N ${block.id}</h4>
-                <p class="card-text">Hash: ${block.hash}<br>
-                Nonce: ${block.nonce}<br>
-                PreviousHash: ${block.previousHash}<br>
-                <#setting date_format="dd-MM-yyyy HH:mm:ss">
-                <#assign createdOn='${block.date}'>
-                Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?date}<br></p>
-              </div>
+          <div class="container">
+            <div class="row">
+              <#list blockTree as block>
+                <#if block.id == 4>
+                  <#break>
+                </#if>
+                  <div class="col-lg-4">
+                    <div class="card mb-2">
+                      <#if block.id == 1>
+                        <img class="card-img-top" src="https://i.ytimg.com/vi/WAIOcPA0EBk/maxresdefault.jpg"
+                        alt="Card image cap">
+                      <#else>
+                        <img class="card-img-top" src="https://www.tbstat.com/wp/uploads/2018/09/20200325_OG-The-Block-Home.jpg"
+                        alt="Card image cap">
+                      </#if>
+                      <div class="card-body">
+                        <h4 class="card-title font-weight-bold">Block N ${block.id}</h4>
+                        <p class="card-text">Hash: ${block.hash}<br>
+                        Nonce: ${block.nonce}<br>
+                        PreviousHash: ${block.previousHash}<br>
+                        <#setting date_format="dd-MM-yyyy HH:mm:ss">
+                        <#assign createdOn='${block.date}'>
+                        <#attempt>
+                           Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?string("dd/MM/yyyy HH:mm:ss")}<br></p>
+                        <#recover>
+                           Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm")?string("dd/MM/yyyy HH:mm:00")}<br></p>
+                        </#attempt>
+                      </div>
+                    </div>
+                  </div>
+              </#list>
             </div>
           </div>
         </div>
+
+        <#if blockTree?size%3==0>
+            <#assign x=(blockTree?size/3)-2>
         <#else>
+            <#assign x=((blockTree?size/3)-2)?ceiling>
+        </#if>
+        <#assign y = 4>
+        <#assign z = 7>
+        <#list 0..x as i>
         <div class="carousel-item">
-          <div class="col-12 col-md-4">
-            <div class="card mb-2">
-              <img class="card-img-top" src="https://www.tbstat.com/wp/uploads/2018/09/20200325_OG-The-Block-Home.jpg"
-                alt="Card image cap">
-              <div class="card-body">
-                <h4 class="card-title font-weight-bold">Block N ${block.id}</h4>
-                <p class="card-text">Hash: ${block.hash}<br>
-                Nonce: ${block.nonce}<br>
-                PreviousHash: ${block.previousHash}<br>
-                <#setting date_format="dd-MM-yyyy HH:mm:ss">
-                <#assign createdOn='${block.date}'>
-                Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?date}<br></p>
-              </div>
+          <div class="container">
+            <div class="row">
+              <#list blockTree as block>
+                <#if (block.id >= y) && (block.id < z)>
+                <div class="col-lg-4">
+                  <div class="card mb-2">
+                    <img class="card-img-top" src="https://www.tbstat.com/wp/uploads/2018/09/20200325_OG-The-Block-Home.jpg"
+                    alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title font-weight-bold">Block N ${block.id}</h4>
+                      <p class="card-text">Hash: ${block.hash}<br>
+                      Nonce: ${block.nonce}<br>
+                      PreviousHash: ${block.previousHash}<br>
+                      <#setting date_format="dd-MM-yyyy HH:mm:ss">
+                      <#assign createdOn='${block.date}'>
+                      <#attempt>
+                         Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?string("dd/MM/yyyy HH:mm:ss")}<br></p>
+                      <#recover>
+                         Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm")?string("dd/MM/yyyy HH:mm:00")}<br></p>
+                      </#attempt>
+                    </div>
+                  </div>
+                </div>
+                </#if>
+              </#list>
+              <#assign y = y + 3>
+              <#assign z = z + 3>
             </div>
           </div>
         </div>
-        </#if>
+
         </#list>
 
     <#else>
     <div class="carousel-item active">
+    <div class="container">
+    <div class="row">
       <#if blockTree?has_content && (blockTree?size <=3) >
       <#list blockTree as block>
-      <div class="col-12 col-md-4">
+        <div class="col-lg-4">
         <div class="card mb-2">
           <#if block.id == 1>
           <img class="card-img-top" src="https://i.ytimg.com/vi/WAIOcPA0EBk/maxresdefault.jpg"
@@ -164,13 +194,17 @@
             PreviousHash: ${block.previousHash}<br>
             <#setting date_format="dd-MM-yyyy HH:mm:ss">
             <#assign createdOn='${block.date}'>
-            Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?date}<br></p>
+            <#attempt>
+               Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?string("dd/MM/yyyy HH:mm:ss")}<br></p>
+            <#recover>
+               Date of creation: ${createdOn?datetime("yyyy-MM-dd'T'HH:mm")?string("dd/MM/yyyy HH:mm:00")}<br></p>
+            </#attempt>
           </div>
         </div>
       </div>
       </#list>
       <#else>
-      <div class="col-12 col-md-4">
+      <div class="col-lg-4">
         <div class="card mb-2">
           <img class="card-img-top" src="https://i.pinimg.com/originals/1e/88/f0/1e88f00bcff87cfae46b49162ab92557.gif"
             alt="Card image cap">
@@ -181,6 +215,8 @@
         </div>
       </div>
       </#if>
+    </div>
+    </div>
     </div>
     </#if>
 

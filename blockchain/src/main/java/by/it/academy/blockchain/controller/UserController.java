@@ -2,7 +2,6 @@ package by.it.academy.blockchain.controller;
 
 import by.it.academy.blockchain.aspect.SecureAuthorization;
 import by.it.academy.blockchain.entity.Transaction;
-import by.it.academy.blockchain.entity.TransactionMock;
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.entity.Wallet;
 import by.it.academy.blockchain.service.TransactionService;
@@ -10,16 +9,16 @@ import by.it.academy.blockchain.service.UserService;
 import by.it.academy.blockchain.service.WalletService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 @Controller
 @Log
@@ -39,7 +38,7 @@ public class UserController {
     @SecureAuthorization
     public ModelAndView homeUser(@PathVariable("id") Long id, ModelAndView modelAndView) {
         User user = userService.getOne(id);
-        Wallet wallet = walletService.getOneByUserId(id);
+        Wallet wallet = user.getWallet();
         Double actualBalance = walletService.getActualBalance(wallet);
         modelAndView.addObject("actualBalance", actualBalance);
         modelAndView.addObject("user", user);
@@ -56,7 +55,7 @@ public class UserController {
                                            @RequestParam(name = "valueError", required = false) String valueError,
                                            ModelAndView modelAndView) {
         User user = userService.getOne(id);
-        Wallet wallet = walletService.getOneByUserId(id);
+        Wallet wallet = user.getWallet();
         Double actualBalance = walletService.getActualBalance(wallet);
         modelAndView.addObject("actualBalance", actualBalance);
         modelAndView.addObject("user", user);
@@ -79,15 +78,31 @@ public class UserController {
 
     @GetMapping("/transactions")
     @SecureAuthorization
-    public ModelAndView getTransactionsList(@PathVariable("id") Long id, ModelAndView modelAndView) {
+    public ModelAndView getTransactionsList(@PathVariable("id") Long id,
+                                            @PageableDefault (sort = {"date"},
+                                                    direction = Sort.Direction.DESC) Pageable pageable,
+                                            ModelAndView modelAndView) {
         User user = userService.getOne(id);
-        Wallet wallet = walletService.getOneByUserId(id);
-        List<Transaction> transactions = wallet.getTransactions();
-        List<TransactionMock> mockingTransactions = TransactionMock.getMockingTransactions(transactions);
+        Page<Transaction> page = transactionService.findByReceiverPublicKey(user.getWallet().getId(), pageable);
         modelAndView.addObject("user", user);
-        modelAndView.addObject("wallet", wallet);
-        modelAndView.addObject("transactionList", mockingTransactions);
+        modelAndView.addObject("page", page);
+        modelAndView.addObject("url", "/blockchain/users/"+id+"/transactions");
         modelAndView.setViewName("user/userTransactions");
+        return modelAndView;
+    }
+
+    @GetMapping("/wallets")
+    @SecureAuthorization
+    public ModelAndView getAllWallets(@PathVariable("id") Long id,
+                                            @PageableDefault (sort = {"id"},
+                                                    direction = Sort.Direction.DESC) Pageable pageable,
+                                            ModelAndView modelAndView) {
+        User hoster = userService.getOne(id);
+        Page<User> users = userService.getAllUsers(pageable);
+        modelAndView.addObject("user", hoster);
+        modelAndView.addObject("page", users);
+        modelAndView.addObject("url", "/blockchain/users/"+id+"/wallets");
+        modelAndView.setViewName("user/allWallets");
         return modelAndView;
     }
 

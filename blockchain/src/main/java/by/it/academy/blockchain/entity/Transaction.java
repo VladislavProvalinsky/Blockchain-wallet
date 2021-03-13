@@ -1,9 +1,7 @@
 package by.it.academy.blockchain.entity;
 
 import by.it.academy.blockchain.enums.TransactionStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,7 +19,7 @@ import java.time.LocalDateTime;
 public class Transaction implements Serializable {
     private static final long serialVersionUID = 5040651852162921242L;
 
-    @Id // hash транзакции который высчитывается из всех данных по транзакции по sha-256
+    @Id
     private String id;
 
     @Column (name = "sender_public_key", nullable = false)
@@ -31,21 +29,18 @@ public class Transaction implements Serializable {
     private String receiverPublicKey;
 
     @Column (name = "signature", nullable = false)
-    private String signature; // хеш транзакции ((id) + private Key) подписанной цифровой подписью
+    private String signature;
 
     @Column (name = "value", nullable = false, precision = 19, scale = 4)
-    private BigDecimal value; // сколько хотим потратить (зависит от input и output предыдущих транзакций)
+    private BigDecimal value;
 
     @Column (name = "comission", nullable = false, precision = 19, scale = 4)
-    private BigDecimal comission; // комиссия для майнера (влияет на скорость подтверждения транзакции)
+    private BigDecimal comission;
 
     @Column(name = "date_of_creation", nullable = false, columnDefinition="TIMESTAMP", updatable = false)
-    private LocalDateTime date; // дата создания транзакции
+    private LocalDateTime date;
 
     @Column (name = "status", nullable = false)
     @Enumerated (EnumType.STRING)
-    private TransactionStatus status; // статус транзакции (подтвержденная, т.е попала в блок / неподтвержденная, т.е в очереди на попадание в блок)
-
-    //block_id
-    //wallet_id
+    private TransactionStatus status;
 }

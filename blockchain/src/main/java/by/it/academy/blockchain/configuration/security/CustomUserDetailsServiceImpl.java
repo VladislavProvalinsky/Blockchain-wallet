@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.configuration.jwt;
+package by.it.academy.blockchain.configuration.security;
 
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.service.UserService;
@@ -10,20 +10,20 @@ import org.springframework.stereotype.Service;
 
 @Log
 @Service
-public class JwtUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserService userService;
 
     @Override
-    public JwtUser loadUserByUsername(String username) throws UsernameNotFoundException {
+    public CustomUserImpl loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("Selecting user from loadUserByUsername(String username)...........");
         User user = userService.findByUsername(username);
         if (user==null){
             throw new UsernameNotFoundException(String.format("User %s not found!", username));
         }
 
-        return JwtUserFactory.fromUserToJwtUser(user);
+        return CustomUserFactory.fromUserToCustomUser(user);
     }
 
 }

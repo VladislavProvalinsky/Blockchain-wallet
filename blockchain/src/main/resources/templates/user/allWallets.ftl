@@ -39,7 +39,6 @@
         </div>
         <hr color="grey">
     <a href="/blockchain/users/${user.id}">Home</a>
-    <a href="/blockchain/users/${user.id}/wallets">Wallets</a>
     <a href="/blockchain/users/${user.id}/transactionForm">Create Transaction</a>
     <a href="/blockchain/users/${user.id}/blocks">Block Tree</a>
     <a href="http://localhost:8080/blockchain/logout">Logout</a>
@@ -48,10 +47,10 @@
 
 <div class="w3-row">
     <div class="w3-rest w3-container">
-        <h2>Your Transactions Info</h2>
-        <button type="button" class="btn btn-success" onclick="window.location.href='/blockchain/users/${user.id}/transactions'"><i class="fa fa-refresh"></i> Refresh</button>
+        <h2>All Wallets</h2>
+        <button type="button" class="btn btn-success" onclick="window.location.href='/blockchain/users/${user.id}/wallets'"><i class="fa fa-refresh"></i> Refresh</button>
     <div class="w3-col w3-right" style="width:300px">
-    <form class="example" action="/blockchain/users/${user.id}/search" style="margin:auto;max-width:300px">
+    <form class="example" action="/blockchain/users/${user.id}/searchWallet" style="margin:auto;max-width:300px">
         <input type="text" placeholder="Search.." name="searchParam" pattern="[\w\S]*" required>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <button type="submit"><i class="fa fa-search"></i></button>
@@ -68,25 +67,18 @@
       <table class="w3-table-all w3-hoverable">
         <tr>
           <th>&#8470;</th>
-          <th>Value</th>
-          <th>Comission</th>
-          <th>Date of creation</th>
-          <th>Current status</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Wallet ID</th>
         </tr>
         <#assign count = 0>
-        <#list page.content as transaction>
+        <#list page.content as usr>
         <#assign count = count + 1>
-        <#assign createdOn='${transaction.date}'>
         <tr>
           <td>${count}</td>
-          <td>${transaction.value} <i class="fa fa-btc"></i></td>
-          <td>${transaction.comission} <i class="fa fa-btc"></i></td>
-          <#attempt>
-            <td>${createdOn?datetime("yyyy-MM-dd'T'HH:mm:ss")?string("dd/MM/yyyy HH:mm:ss")}</td>
-          <#recover>
-            <td>${createdOn?datetime("yyyy-MM-dd'T'HH:mm")?string("dd/MM/yyyy HH:mm:00")}</td>
-          </#attempt>
-          <td>${transaction.status}</td>
+          <td>${usr.name}</td>
+          <td>${usr.surname}</td>
+          <td>${usr.wallet.id}</td>
         </tr>
         </#list>
       </table>

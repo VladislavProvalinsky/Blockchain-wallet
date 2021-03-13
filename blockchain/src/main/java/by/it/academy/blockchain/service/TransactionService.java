@@ -5,8 +5,12 @@ import by.it.academy.blockchain.entity.Output;
 import by.it.academy.blockchain.entity.Transaction;
 import by.it.academy.blockchain.entity.Wallet;
 import by.it.academy.blockchain.enums.TransactionStatus;
+import by.it.academy.blockchain.repository.TransactionRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,13 +19,21 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Log
 public class TransactionService {
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     WalletService walletService;
+
+    @Autowired
+    TransactionRepository transactionRepository;
 
     @Transactional
     public void putNewTransaction(Wallet wallet, Transaction transaction, String privateKey) {
@@ -46,7 +58,7 @@ public class TransactionService {
         if (transaction.getComission() == null) transaction.setComission(BigDecimal.ZERO);
         transaction.setValue(transaction.getValue().setScale(4, RoundingMode.CEILING));
         transaction.setComission(transaction.getComission().setScale(4, RoundingMode.CEILING));
-        Wallet wallet = walletService.getOneByUserId(id);
+        Wallet wallet = userService.getOne(id).getWallet();
         if (walletService.getOne(transaction.getReceiverPublicKey()) == null) {
             log.info("Check 1 ------------------------");
             modelAndView.addObject("receiverPublicKeyError", "No receiver with this walletId!");
@@ -68,5 +80,20 @@ public class TransactionService {
             modelAndView.setViewName("redirect:/users/" + id);
             return modelAndView;
         }
+    }
+
+    public Page<Transaction> findByReceiverPublicKey(String senderPublicKey, Pageable pageable) {
+        return transactionRepository.findBySenderPublicKey(senderPublicKey, pageable);
+    }
+
+    public Page<Transaction> filterTxBySearch(Page<Transaction> page, String searchParam) {
+        List<Transaction> filteredTransactions = page
+                .stream()
+                .filter(tx -> tx.getValue().toString().contains(searchParam) ||
+                        tx.getComission().toString().contains(searchParam) ||
+                        tx.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).contains(searchParam) ||
+                        tx.getStatus().getName().contains(searchParam))
+                .collect(Collectors.toList());
+        return new PageImpl<>(filteredTransactions);
     }
 }

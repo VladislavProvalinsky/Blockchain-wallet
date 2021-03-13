@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.configuration;
+package by.it.academy.blockchain.configuration.security;
 
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.repository.UserRepository;

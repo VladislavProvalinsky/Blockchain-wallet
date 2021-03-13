@@ -1,7 +1,8 @@
 package by.it.academy.blockchain.controller;
 
 import by.it.academy.blockchain.aspect.SecureAuthorization;
-import by.it.academy.blockchain.entity.*;
+import by.it.academy.blockchain.entity.Block;
+import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.service.BlockService;
 import by.it.academy.blockchain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller

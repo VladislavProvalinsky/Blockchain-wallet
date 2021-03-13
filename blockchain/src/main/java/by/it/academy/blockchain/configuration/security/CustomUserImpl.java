@@ -1,4 +1,4 @@
-package by.it.academy.blockchain.configuration.jwt;
+package by.it.academy.blockchain.configuration.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 @AllArgsConstructor
-public class JwtUser implements UserDetails {
+public class CustomUserImpl implements UserDetails {
 
     private static final long serialVersionUID = -5453991246777836874L;
     private String login;
