@@ -68,10 +68,15 @@
             <h4><u><b>BALANCE:</b></u><cite> ${actualBalance} </cite><i class="fa fa-bitcoin"></i></h4></p>
             <p class="text-sm-left">Your personal wallet!<br>Make transactions, mine bitcoins, enjoy the life!</p>
                 <div class="w3-col m8 s12">
-                    <br>
                     <p><button class="btn w3-button w3-padding-large w3-white w3-border" data-clipboard-text="${wallet.id}"><b>COPY PUBLIC KEY</b></button></p>
                     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
                     <script src="/blockchain/static/js/copy.js"></script>
+
+                    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+                    <u><b>MINER ENGINE</b></u>
+                    <button formtarget="_blank" type="submit" class="btn btn-success" onclick="window.location.href='http://localhost:7777/miner/start/${user.wallet.id}';">Launch</button>
+                    <button formtarget="_blank" type="submit" class="btn btn-danger" onclick="window.location.href='http://localhost:7777/miner/stop/${user.wallet.id}';">Stop</button>
+                    <p></p>
                 </div>
           </div>
     </div>
@@ -118,8 +123,6 @@
           </div>
         </div>
   </div>
-
-
 
 </div>
 

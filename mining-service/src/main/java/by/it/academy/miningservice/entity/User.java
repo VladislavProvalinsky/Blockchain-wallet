@@ -54,9 +54,9 @@ public class User implements Serializable {
 
 
     @ToString.Exclude
-    @OneToMany (cascade = CascadeType.ALL)
-    @JoinColumn (name = "user_id")
-    private List<Wallet> wallets = new ArrayList<>(); // кошелек клиента
+    @OneToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "wallet_id")
+    private Wallet wallet;
 
     public User(String name, String surname, String username, String mobile) {
         this.name = name;

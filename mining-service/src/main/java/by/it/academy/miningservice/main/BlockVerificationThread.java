@@ -26,8 +26,9 @@ public class BlockVerificationThread extends Thread {
     @Override
     public void run() {
         while (!this.isInterrupted()) {
-            try {
-                List<Block> blockTree = blockService.getAllBlocks();
+            List<Block> blockTree = blockService.getAllBlocks();
+            if (blockTree.isEmpty()) log.info("[Block Tree in DB is empty. Waiting for new ones...]");
+            else {
                 try {
                     blockTree.forEach(RSAGenUtil::checkBlockHash);
                     log.info("[Block Tree was checked successfully for security by system. Waiting 5 minutes...]");
@@ -35,8 +36,6 @@ public class BlockVerificationThread extends Thread {
                     log.warning(e.getMessage());
                     System.exit(-1);
                 }
-            } catch (NullPointerException e) {
-                log.info("[Block Tree in DB is empty. Waiting for new ones...]");
             }
             timer();
         }

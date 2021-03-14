@@ -28,6 +28,10 @@
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
+    <div>
+      <i class="fa fa-eye"></i> Show Password <input type="checkbox" onclick="seePass()">
+      <script src="/blockchain/static/js/seePass.js"></script>
+    </div>
     <hr>
     <div>
     <button type="submit" class="btn btn-success">Sign in</button>

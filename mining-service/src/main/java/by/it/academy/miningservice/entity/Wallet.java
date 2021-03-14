@@ -24,6 +24,10 @@ public class Wallet implements Serializable {
     @Id
     private String id; // публичный ключ и ID кошелька
 
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "wallet")
+    private User user;
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
     @OneToMany (cascade = CascadeType.ALL)
