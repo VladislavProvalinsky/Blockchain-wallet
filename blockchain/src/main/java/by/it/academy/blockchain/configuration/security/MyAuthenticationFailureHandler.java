@@ -25,7 +25,6 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
             AuthenticationException exception)
             throws IOException, ServletException {
 
-        request.setAttribute("error", "Bad login or password!");
-        redirectStrategy.sendRedirect(request, response, "/login");
+        getRedirectStrategy().sendRedirect(request, response, "/login_error");
     }
 }

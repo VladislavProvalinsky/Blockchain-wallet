@@ -35,7 +35,14 @@
         </div>
         <br>
         <div style="color: white; text-align: center;">
+        <#assign name="${user.name}">
+        <#assign surname="${user.surname}">
+        <#assign res=name+surname>
+        <#if (res?length >= 21)>
+            <h4>${user.name}<br>${user.surname}</h4>
+        <#else>
             <h4>${user.name} ${user.surname}</h4>
+        </#if>
         </div>
         <hr color="grey">
     <a href="/blockchain/users/${user.id}">Home</a>

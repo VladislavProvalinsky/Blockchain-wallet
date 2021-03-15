@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //Redirection to main page after success login
                 .successHandler(myAuthenticationSuccessHandler())
                 .failureHandler(myAuthenticationFailureHandler())
+                .failureUrl("/login_error")
                 .permitAll()
                 .and()
                 .logout()

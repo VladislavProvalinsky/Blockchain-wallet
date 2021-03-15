@@ -14,10 +14,14 @@
   <hr>
   <form action = "/blockchain/login" method="post" class="needs-validation" novalidate>
     <div class="form-group">
+      <#if emailError ??>
+          <div class="alert alert-warning" role="alert">
+              ${emailError}
+          </div>
+      </#if>
       <label for="email"><i class="fa fa-address-card-o"></i> Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email" name="username" required>
       <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-      <span><#if error ??>${error}<#else></#if></span>
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
