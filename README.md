@@ -9,8 +9,7 @@ Database - MySQL, encryptor - Bitcoinj/BouncyCastle, testing - JMeter.
 
 Go to the home page http://localhost:8080/blockchain/ and you will be redirected to the HTTPS connection. Ignore the browser blocking and continue connection (system uses SSL).
 You will pass to the https://localhost:8443/blockchain/ start page.
-Register new wallet. After succesfull passing registration system will generate on your PC desctop new directory with Private-Key txt file in it. This key is your digital signature for every operation
-for every wallet operations. Keep it secured and unmodified because without right Private-Key verification mechanism will abort all your transactions and you will lost all your money!
+Register new wallet. After succesfull passing registration system will generate on your PC desctop new directory with Private-Key txt file in it. This key is your digital signature for every wallet operations. Keep it secured and unmodified because without right Private-Key verification mechanism will abort all your transactions and you will lost all your money!
 
 #How to use Mining Engine
 
