@@ -60,10 +60,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //Access only for for users with role ADMIN
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 //Access for everyone
-                .antMatchers("/", "/static/**", "/notAuthorized").permitAll()
+                .antMatchers("/", "/static/**", "/notAuthorized", "/keystore/**").permitAll()
                 //Any request need to be authenticated
                 .anyRequest().authenticated()
                 .and()
+
+                //Setting HTTPS to my api
+                .requiresChannel().antMatchers("/**").requiresSecure()
+                .and()
+
                 //Settings for login page
                 .formLogin()
                 .loginPage("/login")
