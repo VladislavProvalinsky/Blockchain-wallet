@@ -5,6 +5,16 @@ Electronic wallet - Spring MVC web interface for managing transactions and initi
 Mining service - Spring Boot application generating blocks for mining sessions on a multithreading basis and verifying the consistency of the chain.
 Database - MySQL, encryptor - Bitcoinj/BouncyCastle, testing - JMeter.
 
+#Configuration details
+
+After cloning project on your PC you must do some configuration details (step by step):
+1) Go to the _application.properties_ file in both modules and setup (#MySQL connection properties) for your development environment.
+2) In blockchain module _application.properties_ file setup (hibernate.ddl-auto=create) to say hibernate build DB automatically first time. Then change it for _"update"_ or _"none"_.
+3) In blockchain module _application.properties_ file edit (#Files Upload) property. Put the path sutible for your operating system.
+4) If neсessary edit **hibernate.dialect** and **timezone** properties in both modules _application.properties_ files (# Hibernate).
+5) Make clean-install Maven lifecicle in both modules and ensure that everything is Ok.
+6) Run both modules.
+
 #How to use
 
 Go to the home page http://localhost:8080/blockchain/ and you will be redirected to the HTTPS connection. Ignore the browser blocking and continue connection (system uses SSL).
