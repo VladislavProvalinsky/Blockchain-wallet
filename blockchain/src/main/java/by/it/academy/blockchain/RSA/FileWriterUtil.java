@@ -18,7 +18,7 @@ public class FileWriterUtil {
     public void writeKeyToFile(String userEmail, String key) {
         Path targetPath = Paths.get("C:" + fileSeparator);
         Path blockchainWalletDir = targetPath.resolve("Blockchain Wallet");
-        Path userDir = null;
+        Path userDir = blockchainWalletDir.resolve(userEmail);
         try {
             if (Files.notExists(targetPath.resolve("Blockchain Wallet"))) {
                 blockchainWalletDir = Files.createDirectory(targetPath.resolve("Blockchain Wallet"));
