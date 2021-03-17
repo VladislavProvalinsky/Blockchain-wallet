@@ -79,7 +79,7 @@ public class RSAGenUtil {
             PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(Base58.decode(privateKey));
             KeyFactory kf = KeyFactory.getInstance("RSA");
             pvt = kf.generatePrivate(ks);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (Exception e) {
             log.warning("Signature has invalid format!");
             return null;
         }
@@ -93,7 +93,7 @@ public class RSAGenUtil {
             sign.initSign(privateKey);
             sign.update(data.getBytes());
             signData = Base58.encode(sign.sign());
-        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
+        } catch (Exception e) {
             log.warning("Signature has invalid format!");
             return null;
         }
