@@ -40,6 +40,7 @@
     <div>
     <button type="submit" class="btn btn-success">Sign in</button>
     <button onclick="window.location.href='/blockchain/registration'" type="button" class="btn btn-primary">Don't have an account yet</button>
+    <button onclick="window.location.href='/blockchain/'" type="button" class="btn btn-warning">Home</button>
     </div>
   </form>
 </div>

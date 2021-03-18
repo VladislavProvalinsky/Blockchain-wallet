@@ -64,11 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //Any request need to be authenticated
                 .anyRequest().authenticated()
                 .and()
-
-//                //Setting HTTPS to my api
-//                .requiresChannel().antMatchers("/**").requiresSecure()
-//                .and()
-
                 //Settings for login page
                 .formLogin()
                 .loginPage("/login")
@@ -82,8 +77,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .logoutSuccessHandler(myLogoutSuccessHandler())
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
                 .rememberMe().tokenValiditySeconds(2592000).key("mySecret!").rememberMeParameter("checkRememberMe");

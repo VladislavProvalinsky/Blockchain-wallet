@@ -2,7 +2,6 @@ package by.it.academy.blockchain.controller;
 
 import by.it.academy.blockchain.entity.User;
 import by.it.academy.blockchain.service.RegistrationService;
-import by.it.academy.blockchain.service.UserService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

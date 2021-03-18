@@ -1,5 +1,6 @@
 package by.it.academy.blockchain.service;
 
+import by.it.academy.blockchain.RSA.FileWriterUtil;
 import by.it.academy.blockchain.domain.UserView;
 import by.it.academy.blockchain.entity.Role;
 import by.it.academy.blockchain.entity.User;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.KeyPair;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -48,17 +50,17 @@ public class UserService {
     }
 
     @Transactional
-    public void saveRegisteredUser(User user) {
+    public void saveRegisteredUser(User user, KeyPair keyPair) {
         if (roleRepository.findById(1L).isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.getRoles().add(new Role(1L, "ROLE_USER"));
-            user.setWallet(walletService.registerNewWalletUtil(user));
+            user.setWallet(walletService.registerNewWalletUtil(keyPair));
             user.setActive(false);
             userRepository.save(user);
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.getRoles().add(roleRepository.findById(1L).get());
-            user.setWallet(walletService.registerNewWalletUtil(user));
+            user.setWallet(walletService.registerNewWalletUtil(keyPair));
             user.setActive(false);
             userRepository.save(user);
         }

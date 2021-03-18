@@ -66,7 +66,7 @@
       </div>
   <div>
   <button type="submit" class="btn btn-success">Submit</button>
-  <button onclick="window.location.href='/blockchain'" type="button" class="btn btn-primary">Back</button>
+  <button onclick="window.location.href='/blockchain'" type="button" class="btn btn-primary">Home</button>
   </div>
 </form>
 <hr>

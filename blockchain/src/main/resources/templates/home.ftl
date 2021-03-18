@@ -19,6 +19,31 @@
       </div>
       <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; CLICK HERE</span>
   </div>
+  <!-- Small modal -->
+  <#if targetPath??>
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Welcome, dear ${newUser.name} ${newUser.surname}!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+           Your Secret Key was written in the directory with path: ${targetPath}<br>
+           Thank you for choosing us!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+       $("#exampleModalCenter").modal('show');
+    </script>
+  </#if>
 <hr>
 </header>
 

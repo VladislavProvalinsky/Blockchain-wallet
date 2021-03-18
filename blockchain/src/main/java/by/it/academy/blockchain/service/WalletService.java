@@ -36,9 +36,6 @@ public class WalletService {
     @Autowired
     WalletRepository walletRepository;
 
-    @Autowired
-    FileWriterUtil fileWriterUtil;
-
     public Wallet getOne(String walletId) {
         Wallet wallet = null;
         try {
@@ -56,16 +53,15 @@ public class WalletService {
         walletRepository.save(wallet);
     }
 
-    public Wallet registerNewWalletUtil(User user) {
-        KeyPair keyPair = RSAGenUtil.generateKeyPair();
-        String privateKey = RSAGenUtil.stringPrivateKey(keyPair.getPrivate());
+    public Wallet registerNewWalletUtil(KeyPair keyPair) {
         String publicKey = RSAGenUtil.stringPublicKey(keyPair.getPublic());
-        fileWriterUtil.writeKeyToFile(user.getUsername(), privateKey);
         // создаем новый кошелек и сетим в него первый инпут и баланс
         Wallet wallet = new Wallet(publicKey);
         wallet.getInputs().add(new Input(BigDecimal.valueOf(10)));
         return wallet;
     }
+
+
 
     public Double getActualBalance(Wallet wallet) {
         double inputsSum = wallet
